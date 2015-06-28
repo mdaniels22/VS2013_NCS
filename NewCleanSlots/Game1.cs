@@ -18,8 +18,8 @@ namespace NewCleanSlots
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels;
-        Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65);
+        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels,ImageBox1;
+        Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), ImageBox1Position;
         int animationFrame = 0;
 
         
@@ -57,7 +57,9 @@ namespace NewCleanSlots
             // TODO: use this.Content to load your game content here
             FourReelsBackground = Content.Load<Texture2D>("Four_Reels_bkgrnd");
             TotalCreditsBackground = Content.Load<Texture2D>("Total_Credits_bkgrnd");
-            AnimationReels = Content.Load<Texture2D>("AnimationReelImages"); 
+            AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
+
+            ImageBox1 = Content.Load<Texture2D>("");
         }
 
         /// <summary>
@@ -135,7 +137,80 @@ namespace NewCleanSlots
           
             base.Draw(gameTime);
         }
+         public void Spinning()
+        {
 
+            Random rand = new Random(); //initiates random class
+            int num1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
+            int num2 = rand.Next(1, 4);
+            int num3 = rand.Next(1, 4);
+            int num4 = rand.Next(1, 4);
+
+
+
+           /* BitmapImage bitmapImage = new BitmapImage();
+
+
+
+
+
+
+            switch (num1) //Desides what image to display based on random number 1 -3. This is the first reel/slot
+            {
+                case 1:
+                    ImageBox1.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Bar.png"));
+                    break;
+
+                case 2:
+                    ImageBox1.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Diamond.png"));
+                    break;
+                case 3:
+                    ImageBox1.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Star.png"));
+                    break;
+            }
+
+            switch (num2) //Desides what image to display based on random number 1 -3. This is the second reel/slot
+            {
+                case 1:
+                    ImageBox2.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Bar.png"));
+                    break;
+
+                case 2:
+                    ImageBox2.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Diamond.png"));
+                    break;
+                case 3:
+                    ImageBox2.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Star.png"));
+                    break;
+            }
+
+            switch (num3) //Desides what image to display based on random number 1 -3. This is the third reel/slot
+            {
+                case 1:
+                    ImageBox3.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Bar.png"));
+                    break;
+
+                case 2:
+                    ImageBox3.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Diamond.png"));
+                    break;
+                case 3:
+                    ImageBox3.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Star.png"));
+                    break;
+            }
+
+            switch (num4) //Desides what image to display based on random number 1 -3. This is the fourth reel/slot
+            {
+                case 1:
+                    ImageBox4.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Bar.png"));
+                    break;
+
+                case 2:
+                    ImageBox4.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Diamond.png"));
+                    break;
+                case 3:
+                    ImageBox4.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Star.png"));
+                    break;
+            }*/
+        }
 
     }
 
