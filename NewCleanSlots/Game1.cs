@@ -19,9 +19,10 @@ namespace NewCleanSlots
         SpriteBatch spriteBatch;
         
         Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels,ImageBox1;
-        Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), ImageBox1Position;
+        Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), Reel1Position=new Vector2 (56,65);
         int animationFrame = 0;
 
+        Model Reel1;
         
 
 
@@ -59,7 +60,7 @@ namespace NewCleanSlots
             TotalCreditsBackground = Content.Load<Texture2D>("Total_Credits_bkgrnd");
             AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
 
-            ImageBox1 = Content.Load<Texture2D>("");
+            Reel1 = Content.Load<Model>("Reel_Images_Star");
         }
 
         /// <summary>
@@ -133,6 +134,8 @@ namespace NewCleanSlots
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
             spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+           // spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 0.0f, SpriteEffects.None, 0.0f);
+            
             spriteBatch.End();
           
             base.Draw(gameTime);
@@ -146,7 +149,21 @@ namespace NewCleanSlots
             int num3 = rand.Next(1, 4);
             int num4 = rand.Next(1, 4);
 
+            switch (num1)
+            {
+                case 1:
+                    Reel1 = Content.Load<Model>("Reel_Images_Bar.png");
+                    break;
 
+                case 2:
+                    Reel1 = Content.Load<Model>("Reel_Images_Star.png");
+                    break;
+
+                case 3:
+                    Reel1 = Content.Load<Model>("Reel_Images_Star.png");
+                    break;
+
+            }
 
            /* BitmapImage bitmapImage = new BitmapImage();
 
