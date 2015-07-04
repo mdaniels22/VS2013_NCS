@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using System;
 using System.Collections;
 using System.IO;
+
 namespace NewCleanSlots
 {
     /// <summary>
@@ -18,12 +19,13 @@ namespace NewCleanSlots
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels,ImageBox1;
+        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels;
         Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), Reel1Position=new Vector2 (56,65);
         int animationFrame = 0;
 
-        Model Reel1;
-        
+        Texture2D Reel1;
+
+        GameTimer timer1;
 
 
         public Game1()
@@ -60,7 +62,7 @@ namespace NewCleanSlots
             TotalCreditsBackground = Content.Load<Texture2D>("Total_Credits_bkgrnd");
             AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
 
-            Reel1 = Content.Load<Model>("Reel_Images_Star");
+            Reel1 = Content.Load<Texture2D>("Reel_Images_Bar");
         }
 
         /// <summary>
@@ -85,12 +87,6 @@ namespace NewCleanSlots
 
          UpdateAll(gameTime);   //method from GameFramework        
 
-      /* if (GamePage.Current.SpinButtonClicked != null)
-        {
-            GamePage.Current.SpinButtonClicked = true;
-        }*/
-      //  if ((bool)GamePage.Current.SpinButtonClicked)
-       // {
           if (GamePage.Current.SpinButtonClicked)
            {
                 //Code for animation
@@ -107,9 +103,11 @@ namespace NewCleanSlots
                 if (animationFrame >= 8)
                     animationFrame = 0;
 
-              // GamePage.Current.SpinButtonClicked = false; //unclicked button
+                timer1.Start();
+
+             GamePage.Current.SpinButtonClicked = false; //unclicked button
             }
-     //  }
+          
         
             base.Update(gameTime);
         }
@@ -134,7 +132,7 @@ namespace NewCleanSlots
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
             spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
-           // spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 0.0f, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 0.0f, SpriteEffects.None, 0.0f);
             
             spriteBatch.End();
           
@@ -152,15 +150,15 @@ namespace NewCleanSlots
             switch (num1)
             {
                 case 1:
-                    Reel1 = Content.Load<Model>("Reel_Images_Bar.png");
+                    Reel1 = Content.Load<Texture2D>("Reel_Images_Bar.png");
                     break;
 
                 case 2:
-                    Reel1 = Content.Load<Model>("Reel_Images_Star.png");
+                    Reel1 = Content.Load<Texture2D>("Reel_Images_Star.png");
                     break;
 
                 case 3:
-                    Reel1 = Content.Load<Model>("Reel_Images_Star.png");
+                    Reel1 = Content.Load<Texture2D>("Reel_Images_Star.png");
                     break;
 
             }

@@ -58,7 +58,7 @@ namespace NewCleanSlots
             //indicates Spin button is clicked
             SpinButtonClicked = true;
             
-                Random rand = new Random(); //initiates random class
+               Random rand = new Random(); //initiates random class
                 int num1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
                 int num2 = rand.Next(1, 4);
                 int num3 = rand.Next(1, 4);
@@ -71,7 +71,7 @@ namespace NewCleanSlots
 
 
 
-                switch (num1) //Desides what image to display based on random number 1 -3. This is the first reel/slot
+              /*  switch (num1) //Desides what image to display based on random number 1 -3. This is the first reel/slot
                 {
                     case 1:
                         ImageBox1.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Bar.png"));
@@ -125,7 +125,7 @@ namespace NewCleanSlots
                     case 3:
                         ImageBox4.Source = new BitmapImage(new Uri("ms-appx:///Content/Reel_Images_Star.png"));
                         break;
-                }
+                }*/
 
 
                 //code to check for winning combo        
