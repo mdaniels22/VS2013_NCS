@@ -19,11 +19,11 @@ namespace NewCleanSlots
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels;
+        Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels,Reel1;
         Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), Reel1Position=new Vector2 (56,65);
         int animationFrame = 0;
 
-        Texture2D Reel1;
+        
 
         GameTimer timer1;
 
@@ -89,7 +89,7 @@ namespace NewCleanSlots
 
           if (GamePage.Current.SpinButtonClicked)
            {
-                //Code for animation
+             /*   //Code for animation
 
                 //sprite continues to move down and then jumps to the top
                 AnimationReelsPosition.Y += 5;
@@ -103,7 +103,8 @@ namespace NewCleanSlots
                 if (animationFrame >= 8)
                     animationFrame = 0;
 
-                timer1.Start();
+               timer1.Start();*/
+               Spinning();
 
              GamePage.Current.SpinButtonClicked = false; //unclicked button
             }
@@ -128,11 +129,11 @@ namespace NewCleanSlots
 
             spriteBatch.Begin();
             //image,postion,rectangle,color,rotation,origin,scale,effect,depth
-            spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
+          //  spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
-            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
-            spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 0.0f, SpriteEffects.None, 0.0f);
+           // spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.6f);
             
             spriteBatch.End();
           
@@ -141,7 +142,7 @@ namespace NewCleanSlots
          public void Spinning()
         {
 
-            Random rand = new Random(); //initiates random class
+           Random rand = new Random(); //initiates random class
             int num1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
             int num2 = rand.Next(1, 4);
             int num3 = rand.Next(1, 4);
@@ -158,7 +159,7 @@ namespace NewCleanSlots
                     break;
 
                 case 3:
-                    Reel1 = Content.Load<Texture2D>("Reel_Images_Star.png");
+                    Reel1 = Content.Load<Texture2D>("Reel_Images_Diamond.png");
                     break;
 
             }

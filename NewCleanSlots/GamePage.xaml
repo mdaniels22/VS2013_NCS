@@ -12,7 +12,6 @@
         <Button x:Name="Bet_btn" Content="+" HorizontalAlignment="Left" Margin="290,297,0,0" VerticalAlignment="Top" Width="58" Click="Bet_btn_Click"/>
         <Button x:Name="BetMinus_btn" Content="-" HorizontalAlignment="Left" Margin="158,297,0,0" VerticalAlignment="Top" Click="BetMinus_btn_Click"/>
         <Image x:Name="ImageBox2" HorizontalAlignment="Left" Height="167" Margin="198,81,0,0" VerticalAlignment="Top" Width="129" Source="Content/Reel_Images_Star.png"/>
-        <Image x:Name="ImageBox1" HorizontalAlignment="Left" Height="167" Margin="65,81,0,0" Width="128" Source="Content/Reel_Images_Bar.png" NineGrid="0" VerticalAlignment="Top"/>
         <Image x:Name="ImageBox3" HorizontalAlignment="Left" Height="167" Margin="331,81,0,0" VerticalAlignment="Top" Width="129" Source="Content/Reel_Images_Diamond.png"/>
         <Image x:Name="ImageBox4" HorizontalAlignment="Left" Height="167" Margin="465,81,0,0" VerticalAlignment="Top" Width="128" Source="Content/Reel_Images_Star.png"/>
         <TextBlock x:Name="CoinValue" HorizontalAlignment="Left" Margin="50,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="158" Text="5"/>
