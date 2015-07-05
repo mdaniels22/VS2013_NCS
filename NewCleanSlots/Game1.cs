@@ -23,9 +23,9 @@ namespace NewCleanSlots
         Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), Reel1Position=new Vector2 (56,65);
         int animationFrame = 0;
 
-        
+        TimeSpan spinTimer = TimeSpan.Zero;
 
-        GameTimer timer1;
+       
 
 
         public Game1()
@@ -89,24 +89,20 @@ namespace NewCleanSlots
 
           if (GamePage.Current.SpinButtonClicked)
            {
-             /*   //Code for animation
 
-                //sprite continues to move down and then jumps to the top
-                AnimationReelsPosition.Y += 5;
-                if (AnimationReelsPosition.Y >= 175) //>= GraphicsDevice.Viewport.Height)
-                    // spritePosition.Y = 0; 
-                    //sprite jumps to the negative position based on the height of the sprite
-                    //negative bc it above the 0 position, above the screen
-                    AnimationReelsPosition.Y = 100; //= -spriteSheet.Height;
+              Animation();
 
-                animationFrame += 1;
-                if (animationFrame >= 8)
-                    animationFrame = 0;
+              spinTimer += gameTime.ElapsedGameTime;
+              
 
-               timer1.Start();*/
-               Spinning();
+              if(spinTimer >= TimeSpan.FromSeconds(3))
+              {
+                  Spinning();
+                  GamePage.Current.SpinButtonClicked = false;
+              }
+              AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
 
-             GamePage.Current.SpinButtonClicked = false; //unclicked button
+            // GamePage.Current.SpinButtonClicked = false; //unclicked button
             }
           
         
@@ -132,14 +128,37 @@ namespace NewCleanSlots
           //  spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
-           // spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
-            spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.6f);
+            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+           // spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.6f);
             
             spriteBatch.End();
           
             base.Draw(gameTime);
         }
-         public void Spinning()
+
+
+        public void Animation()
+        {
+            //Code for animation
+
+            //sprite continues to move down and then jumps to the top
+            AnimationReelsPosition.Y += 5;
+            if (AnimationReelsPosition.Y >= 175) //>= GraphicsDevice.Viewport.Height)
+                // spritePosition.Y = 0; 
+                //sprite jumps to the negative position based on the height of the sprite
+                //negative bc it above the 0 position, above the screen
+                AnimationReelsPosition.Y = 100; //= -spriteSheet.Height;
+
+            animationFrame += 1;
+            if (animationFrame >= 8)
+                animationFrame = 0;
+
+           // AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
+        }
+
+        
+        
+        public void Spinning()
         {
 
            Random rand = new Random(); //initiates random class
@@ -151,15 +170,15 @@ namespace NewCleanSlots
             switch (num1)
             {
                 case 1:
-                    Reel1 = Content.Load<Texture2D>("Reel_Images_Bar.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Bar.png");
                     break;
 
                 case 2:
-                    Reel1 = Content.Load<Texture2D>("Reel_Images_Star.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Star.png");
                     break;
 
                 case 3:
-                    Reel1 = Content.Load<Texture2D>("Reel_Images_Diamond.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Diamond.png");
                     break;
 
             }
