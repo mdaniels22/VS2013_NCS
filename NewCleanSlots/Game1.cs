@@ -129,11 +129,11 @@ namespace NewCleanSlots
 
             spriteBatch.Begin();
             //image,postion,rectangle,color,rotation,origin,scale,effect,depth
-          //  spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
+            spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
-            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f),
-                0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,1.0f),
+                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
            // spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.6f);
             
             spriteBatch.End();
@@ -149,11 +149,12 @@ namespace NewCleanSlots
 
             //sprite continues to move down and then jumps to the top
             AnimationReelsPosition.Y += 5;
-            if (AnimationReelsPosition.Y >= 175) //>= GraphicsDevice.Viewport.Height)
+            if (AnimationReelsPosition.Y >= 120) //>= GraphicsDevice.Viewport.Height). If the Y coordinats of animation goes below 120...
                 // spritePosition.Y = 0; 
                 //sprite jumps to the negative position based on the height of the sprite
                 //negative bc it above the 0 position, above the screen
-                AnimationReelsPosition.Y = 100; //= -spriteSheet.Height;
+                AnimationReelsPosition.Y = 65; //= -spriteSheet.Height;.....the Y coordinates of the animation jumps back up to 65
+          
 
             animationFrame += 1;
             if (animationFrame >= 8)
@@ -166,6 +167,8 @@ namespace NewCleanSlots
         
         public void Spinning()
         {
+            animationFrame = 0; //resets the animationFrame back to 0
+            AnimationReelsPosition.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
 
            Random rand = new Random(); //initiates random class
             int num1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
