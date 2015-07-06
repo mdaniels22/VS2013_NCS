@@ -58,14 +58,14 @@ namespace NewCleanSlots
             //indicates Spin button is clicked
             SpinButtonClicked = true;
             
-               Random rand = new Random(); //initiates random class
+             /*  Random rand = new Random(); //initiates random class
                 int num1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
                 int num2 = rand.Next(1, 4);
                 int num3 = rand.Next(1, 4);
                 int num4 = rand.Next(1, 4);
 
                 BitmapImage bitmapImage = new BitmapImage();
-
+            */
 
 
 
@@ -128,7 +128,7 @@ namespace NewCleanSlots
                 }*/
 
 
-                //code to check for winning combo        
+             /*   //code to check for winning combo        
                 if (num1 == 1 & num2 == 1 & num3 == 1 & num4 == 1)
                 {
                     _coinValue = _coinValue += 10; //adds value to coins
@@ -147,23 +147,15 @@ namespace NewCleanSlots
                             _coinValue = _coinValue += 10;
                             CoinValue.Text = "" + _coinValue;
                         }
-                        /*    else
-                            //subtracts from _coinvalue if reels dont match
-                                if ((num1 != 1 & num2 != 1 & num3 != 1 & num4 != 1) || 
-                                    (num1 != 2 & num2 != 2 & num3 != 2 & num4 != 2) ||
-                                    (num1 != 3 & num2 != 3 & num3 != 3 & num4 != 3 ))
-
-                                 {
-                                     _coinValue = _coinValue -= 1;
-                                     CoinValue.Text = "" + _coinValue;
-
-                                 } */
+                      
                         else
                         {
                             _coinValue = _coinValue -= _betValue;
                             CoinValue.Text = "" + _coinValue;
 
                         }
+             
+
                 //disables Spin button if displays text if out of coins
                 if (_coinValue <= 0) 
                 {
@@ -171,37 +163,18 @@ namespace NewCleanSlots
                     Spin_btn.IsEnabled = false;
                     Bet_btn.IsEnabled = false;
                     BetMinus_btn.IsEnabled = false;
-                }            
+                } 
+            */          
         }
 
+        
         public void Bet_btn_Click(object sender, RoutedEventArgs e)
         {
             
           _betValue += 1;
 
            
-        /* for (_betValue += 1; _betValue <= 5 && _betValue >= 1; _betValue++)
-            {
-                if (_betValue <5 )
-                {
-                    Bet_btn.IsEnabled = false;
-                    break;
-                }
-                BetValue.Text = "" + _betValue;
-
-             
-                if (_betValue <=5)
-                {
-                    Bet_btn.IsEnabled = true;
-                    break;
-                }
-                else
-                {
-                    Bet_btn.IsEnabled = false;
-                    
-                }
-                BetValue.Text = "" + _betValue;
-            }*/
+       
            
              if (_betValue < 5 && _betValue > 1)
             {
@@ -216,6 +189,7 @@ namespace NewCleanSlots
             }
              BetValue.Text = "" + _betValue;
         }
+         
 
         public void BetMinus_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -223,23 +197,7 @@ namespace NewCleanSlots
             _betValue -= 1;
            
 
-          /*  for (_betValue -= 1; _betValue >= 1 && _betValue <=5; _betValue++)
-            {
-                if (_betValue < 1)
-                {
-                    BetMinus_btn.IsEnabled = false;
-                    break;
-                }
-                BetValue.Text = "" + _betValue;
-                if(_betValue >=1)
-                {
-                    BetMinus_btn.IsEnabled = true;
-                    break;
-                }
-                BetValue.Text = "" + _betValue;
-                
-                
-            }*/
+      
             
             if(_betValue > 1 && _betValue < 5)
             {

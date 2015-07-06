@@ -91,7 +91,7 @@ namespace NewCleanSlots
            {
 
               Animation();
-
+              //Spinning();
               spinTimer += gameTime.ElapsedGameTime;
               
 
@@ -99,8 +99,10 @@ namespace NewCleanSlots
               {
                   Spinning();
                   GamePage.Current.SpinButtonClicked = false;
+                 // AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
+                  spinTimer = TimeSpan.Zero;
+
               }
-              AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
 
             // GamePage.Current.SpinButtonClicked = false; //unclicked button
             }
@@ -128,7 +130,8 @@ namespace NewCleanSlots
           //  spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
           // spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
 
-            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f), 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(AnimationReels, AnimationReelsPosition, new Rectangle(animationFrame * 75, 0, 75, 75), new Color(Color.White,0.8f),
+                0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
            // spriteBatch.Draw(Reel1, Reel1Position, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.6f);
             
             spriteBatch.End();
@@ -140,6 +143,7 @@ namespace NewCleanSlots
         public void Animation()
         {
             //Code for animation
+            AnimationReels = Content.Load<Texture2D>("AnimationReelImages"); //everytime animation begins it starts with the AnimationReelImages
 
             //sprite continues to move down and then jumps to the top
             AnimationReelsPosition.Y += 5;
@@ -153,7 +157,7 @@ namespace NewCleanSlots
             if (animationFrame >= 8)
                 animationFrame = 0;
 
-           // AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
+          
         }
 
         
@@ -170,15 +174,18 @@ namespace NewCleanSlots
             switch (num1)
             {
                 case 1:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Bar.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Bar");
+                    
                     break;
 
                 case 2:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Star.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Star");
+                   
                     break;
 
                 case 3:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Diamond.png");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Diamond");
+                    
                     break;
 
             }
