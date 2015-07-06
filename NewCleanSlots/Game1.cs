@@ -22,6 +22,7 @@ namespace NewCleanSlots
         Texture2D FourReelsBackground, TotalCreditsBackground, AnimationReels,Reel1;
         Vector2 FourReelsBackgroundPosition, TotalCreditsBackgroundPosition,AnimationReelsPosition = new Vector2 (55,65), Reel1Position=new Vector2 (56,65);
         int animationFrame = 0;
+        
 
         TimeSpan spinTimer = TimeSpan.Zero;
 
@@ -62,7 +63,7 @@ namespace NewCleanSlots
             TotalCreditsBackground = Content.Load<Texture2D>("Total_Credits_bkgrnd");
             AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
 
-            Reel1 = Content.Load<Texture2D>("Reel_Images_Bar");
+            Reel1 = Content.Load<Texture2D>("Reel_Images_Bar1");
         }
 
         /// <summary>
@@ -103,8 +104,8 @@ namespace NewCleanSlots
                   spinTimer = TimeSpan.Zero;
 
               }
-
-            // GamePage.Current.SpinButtonClicked = false; //unclicked button
+             
+           
             }
           
         
@@ -124,6 +125,7 @@ namespace NewCleanSlots
             FourReelsBackgroundPosition = new Vector2(55, 65);
             TotalCreditsBackgroundPosition = new Vector2(55,285);
            // AnimationReelsPosition = new Vector2(55, 65);
+           
 
             spriteBatch.Begin();
             //image,postion,rectangle,color,rotation,origin,scale,effect,depth
@@ -174,21 +176,24 @@ namespace NewCleanSlots
             switch (num1)
             {
                 case 1:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Bar");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Bar1");
                     
                     break;
 
                 case 2:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Star");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Star1");
                    
                     break;
 
                 case 3:
-                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Diamond");
+                    AnimationReels = Content.Load<Texture2D>("Reel_Images_Diamond1");
                     
                     break;
 
+
             }
+
+          
 
            /* BitmapImage bitmapImage = new BitmapImage();
 

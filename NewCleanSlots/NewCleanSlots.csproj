@@ -119,8 +119,17 @@
     <Content Include="Content\Reel_Images_Bar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Reel_Images_Bar1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Reel_Images_Diamond.png" />
+    <Content Include="Content\Reel_Images_Diamond1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Reel_Images_Star.png" />
+    <Content Include="Content\Reel_Images_Star1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Total_Credits_bkgrnd.png" />
   </ItemGroup>
   <ItemGroup>
