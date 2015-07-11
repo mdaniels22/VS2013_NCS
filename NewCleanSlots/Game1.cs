@@ -217,7 +217,7 @@ namespace NewCleanSlots
 
         
         
-        public void Spinning()
+        public void Spinning() //Displays Image based on random number, checkes for winning combo, 
         {
             animationFrame = 0; //resets the animationFrame back to 0
             AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
@@ -285,8 +285,19 @@ namespace NewCleanSlots
                     break;
             }
           
+            //Check for winning Combos
+            int _coinValue = 5;
+
+            if (reel1 == 1 & reel2 == 1 & reel3 == 1 & reel4 == 1)
+            {
+                _coinValue = _coinValue += 10; //increase the coinValue by 10
+
+                //MUST ADD TEXT. ADD SpriteFont FIRST
+            }
 
         }
+
+      
 
     }
 
