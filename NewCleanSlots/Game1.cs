@@ -32,7 +32,8 @@ namespace NewCleanSlots
             AnimationReel2Position,
             AnimationReel3Position,
             AnimationReel4Position;
-            
+
+        SpriteFont _font;
 
         int animationFrame = 0;
         
@@ -78,6 +79,7 @@ namespace NewCleanSlots
             AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
+            _font = Content.Load<SpriteFont>("Rockwell");
 
             
         }
@@ -164,6 +166,8 @@ namespace NewCleanSlots
 
             spriteBatch.Draw(AnimationReel4, AnimationReel4Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+
+            spriteBatch.DrawString(_font, "SCORE", new Vector2(100, 100), Color.White);
             
 
                               
@@ -294,7 +298,18 @@ namespace NewCleanSlots
 
                 //MUST ADD TEXT. ADD SpriteFont FIRST
             }
+            else
+                if (reel1 == 2 & reel2 == 2 & reel3 == 2 & reel4 == 2)
+                {
+                    _coinValue = _coinValue += 10;
 
+
+                }
+                else
+                    if (reel1 == 3 & reel2 == 3 & reel3 == 3 & reel4 == 3)
+                    {
+                        _coinValue = _coinValue +=10;
+                    }
         }
 
       
