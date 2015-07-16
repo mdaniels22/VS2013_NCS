@@ -33,12 +33,14 @@ namespace NewCleanSlots
             AnimationReel3Position,
             AnimationReel4Position;
 
-        SpriteFont _font;
+        SpriteFont totalText,
+            betText;
 
         int animationFrame = 0;
         
 
         TimeSpan spinTimer = TimeSpan.Zero;
+        int _coinValue = 10;
 
        
 
@@ -79,7 +81,8 @@ namespace NewCleanSlots
             AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
-            _font = Content.Load<SpriteFont>("Rockwell");
+            totalText = Content.Load<SpriteFont>("ArialFont");
+            betText = Content.Load<SpriteFont>("ArialFont");
 
             
         }
@@ -167,8 +170,9 @@ namespace NewCleanSlots
             spriteBatch.Draw(AnimationReel4, AnimationReel4Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
 
-            spriteBatch.DrawString(_font, "SCORE", new Vector2(100, 100), Color.White);
-            
+            spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(100, 100), Color.Purple);
+
+            spriteBatch.DrawString(betText, "BET  ", new Vector2(200, 200), Color.Purple);
 
                               
             spriteBatch.End();
@@ -290,13 +294,14 @@ namespace NewCleanSlots
             }
           
             //Check for winning Combos
-            int _coinValue = 5;
+          //  int _coinValue = 5;
 
             if (reel1 == 1 & reel2 == 1 & reel3 == 1 & reel4 == 1)
             {
                 _coinValue = _coinValue += 10; //increase the coinValue by 10
 
-                //MUST ADD TEXT. ADD SpriteFont FIRST
+                //_coinValue shows in spritBatch draw               
+                                
             }
             else
                 if (reel1 == 2 & reel2 == 2 & reel3 == 2 & reel4 == 2)
