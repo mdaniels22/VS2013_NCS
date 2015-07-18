@@ -24,23 +24,30 @@ namespace NewCleanSlots
             AnimationReel1,
             AnimationReel2,
             AnimationReel3,
-            AnimationReel4;
+            AnimationReel4,
+            BetIncreaseButton;
 
         Vector2 FourReelsBackgroundPosition, 
             TotalCreditsBackgroundPosition,
             AnimationReel1Position,
             AnimationReel2Position,
             AnimationReel3Position,
-            AnimationReel4Position;
+            AnimationReel4Position,
+            BetIncreaseButtonPosition;
 
         SpriteFont totalText,
             betText;
+
+        Rectangle betButton;
 
         int animationFrame = 0;
         
 
         TimeSpan spinTimer = TimeSpan.Zero;
-        int _coinValue = 10;
+
+           
+        int _coinValue = 10,
+            _betValue = 1;
 
        
 
@@ -83,6 +90,7 @@ namespace NewCleanSlots
             AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
             totalText = Content.Load<SpriteFont>("ArialFont");
             betText = Content.Load<SpriteFont>("ArialFont");
+            BetIncreaseButton = Content.Load<Texture2D>("Orange_btn 1");
 
             
         }
@@ -107,9 +115,21 @@ namespace NewCleanSlots
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) this.Exit(); //makes back button exit game
 
-         UpdateAll(gameTime);   //method from GameFramework        
+         UpdateAll(gameTime);   //method from GameFramework     
 
-          if (GamePage.Current.SpinButtonClicked)
+         TouchCollection _touches = TouchPanel.GetState();
+
+            //create bet button. check to see if it is touch and if so increase bet
+         betButton = new Rectangle(50, 50, 100, 100); //rectangle will not show anything untill draw() is created w sprite
+            foreach (TouchLocation touch in _touches)
+            {
+                if (touch.State == TouchLocationState.Pressed && betButton.Contains((int)touch.Position.X, (int)touch.Position.Y) )
+                {
+                    betIncrease();
+                }
+            }
+
+          if (GamePage.Current.SpinButtonClicked) //may change if touchpanel works and able to create own buttons w Monogame
            {
 
               Animation();
@@ -129,6 +149,7 @@ namespace NewCleanSlots
            
             }
           
+
         
             base.Update(gameTime);
         }
@@ -149,6 +170,7 @@ namespace NewCleanSlots
             AnimationReel2Position = new Vector2(235, 65);
             AnimationReel3Position = new Vector2(435, 65);
             AnimationReel4Position = new Vector2(635, 65);
+            BetIncreaseButtonPosition = new Vector2(40, 165);
 
            
            
@@ -172,7 +194,9 @@ namespace NewCleanSlots
 
             spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(100, 100), Color.Purple);
 
-            spriteBatch.DrawString(betText, "BET  ", new Vector2(200, 200), Color.Purple);
+            spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 200), Color.Purple);
+
+            spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
 
                               
             spriteBatch.End();
@@ -317,6 +341,15 @@ namespace NewCleanSlots
                     }
         }
 
+        public void betIncrease()
+        {
+
+            _betValue += 1;
+
+           // if (_betValue >=1 && _betValue <=5)
+               
+                //MUST  find way enable and disable GamePage buttons or create buttons with Monogame.
+        }
       
 
     }

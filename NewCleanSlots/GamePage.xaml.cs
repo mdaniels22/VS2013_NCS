@@ -30,9 +30,12 @@ namespace NewCleanSlots
 
        readonly Game1 _game;
        public static GamePage Current { get; set; }
-       //public bool  SpinButtonClicked { get; set; }
+      
        public bool SpinButtonClicked { get; set; }
-       //Nullable<bool> SpinButtonClicked { get; set; }
+       public bool BetIncreaseButtonClicked { get; set; }
+       public bool BetDecreaseButtonClicked { get; set; }
+
+       
         public GamePage()
         {
           this.InitializeComponent();
@@ -101,8 +104,9 @@ namespace NewCleanSlots
         }
 
         
-        public void Bet_btn_Click(object sender, RoutedEventArgs e)
+        public void BetIncrease(object sender, RoutedEventArgs e)
         {
+            BetIncreaseButtonClicked = true;
             
           _betValue += 1;
 
@@ -124,7 +128,7 @@ namespace NewCleanSlots
         }
          
 
-        public void BetMinus_btn_Click(object sender, RoutedEventArgs e)
+        public void BetDecrease(object sender, RoutedEventArgs e)
         {
 
             _betValue -= 1;
