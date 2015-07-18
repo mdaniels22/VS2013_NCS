@@ -115,18 +115,29 @@ namespace NewCleanSlots
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) this.Exit(); //makes back button exit game
 
+
          UpdateAll(gameTime);   //method from GameFramework     
 
-         TouchCollection _touches = TouchPanel.GetState();
+         int x = 0,
+             y = 0;
+         bool isInputPressed = false;
+
+         var _touches = TouchPanel.GetState();
 
             //create bet button. check to see if it is touch and if so increase bet
-         betButton = new Rectangle(50, 50, 100, 100); //rectangle will not show anything untill draw() is created w sprite
-            foreach (TouchLocation touch in _touches)
+       
+          if (_touches.Count >=1)
+          {
+              var touch = _touches[0];
+              x = (int)touch.Position.X;
+              y = (int)touch.Position.Y;
+
+              isInputPressed = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Moved;
+          }
+          betButton = new Rectangle(1, 1, 185, 100); //rectangle will not show anything untill draw() is created w sprite
+            if(isInputPressed && betButton.Contains(x,y))
             {
-                if (touch.State == TouchLocationState.Pressed && betButton.Contains((int)touch.Position.X, (int)touch.Position.Y) )
-                {
-                    betIncrease();
-                }
+                betIncrease();
             }
 
           if (GamePage.Current.SpinButtonClicked) //may change if touchpanel works and able to create own buttons w Monogame
@@ -170,7 +181,7 @@ namespace NewCleanSlots
             AnimationReel2Position = new Vector2(235, 65);
             AnimationReel3Position = new Vector2(435, 65);
             AnimationReel4Position = new Vector2(635, 65);
-            BetIncreaseButtonPosition = new Vector2(40, 165);
+            BetIncreaseButtonPosition = new Vector2(40, 365);
 
            
            
@@ -196,7 +207,8 @@ namespace NewCleanSlots
 
             spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 200), Color.Purple);
 
-            spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+           // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(BetIncreaseButton, betButton, Color.White);
 
                               
             spriteBatch.End();
@@ -344,7 +356,7 @@ namespace NewCleanSlots
         public void betIncrease()
         {
 
-            _betValue += 1;
+            _betValue++;
 
            // if (_betValue >=1 && _betValue <=5)
                
