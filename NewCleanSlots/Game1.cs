@@ -25,31 +25,38 @@ namespace NewCleanSlots
             AnimationReel2,
             AnimationReel3,
             AnimationReel4,
-            BetIncreaseButton;
+            Button;
 
         Vector2 FourReelsBackgroundPosition, 
             TotalCreditsBackgroundPosition,
             AnimationReel1Position,
             AnimationReel2Position,
             AnimationReel3Position,
-            AnimationReel4Position,
-            BetIncreaseButtonPosition;
+            AnimationReel4Position;
+            
 
         SpriteFont totalText,
             betText;
 
-        Rectangle betButton;
+        Rectangle betAddButton,
+            betMinusButton,
+            spinButton;
 
         int animationFrame = 0;
-        
+
 
         TimeSpan spinTimer = TimeSpan.Zero;
 
            
         int _coinValue = 10,
-            _betValue = 1;
+            _betValue = 1,
+            x = 0,
+            y = 0;
 
-       
+        bool isInputPressed = false;
+        bool isInputClicked = false; // so spin button keeps animation() going.
+
+           
 
 
         public Game1()
@@ -90,7 +97,7 @@ namespace NewCleanSlots
             AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
             totalText = Content.Load<SpriteFont>("ArialFont");
             betText = Content.Load<SpriteFont>("ArialFont");
-            BetIncreaseButton = Content.Load<Texture2D>("Orange_btn 1");
+            Button = Content.Load<Texture2D>("Orange_btn 1");
 
             
         }
@@ -118,29 +125,56 @@ namespace NewCleanSlots
 
          UpdateAll(gameTime);   //method from GameFramework     
 
-         int x = 0,
-             y = 0;
-         bool isInputPressed = false;
-
          var _touches = TouchPanel.GetState();
 
-            //create bet button. check to see if it is touch and if so increase bet
-       
+            
+       //check if screen is touched
           if (_touches.Count >=1)
           {
               var touch = _touches[0];
               x = (int)touch.Position.X;
               y = (int)touch.Position.Y;
 
-              isInputPressed = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Moved;
+              isInputPressed = touch.State == TouchLocationState.Pressed; //|| touch.State == TouchLocationState.Moved; 
+              isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released;
           }
-          betButton = new Rectangle(1, 1, 185, 100); //rectangle will not show anything untill draw() is created w sprite
-            if(isInputPressed && betButton.Contains(x,y))
+          //create bet button. check to see if it is touch and if so increase bet
+
+            //rectangle(x location , y location, width of sprite, height of sprite)
+          betAddButton = new Rectangle(275, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
+            if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 )
             {
-                betIncrease();
+                _betValue++;
             }
 
-          if (GamePage.Current.SpinButtonClicked) //may change if touchpanel works and able to create own buttons w Monogame
+          betMinusButton = new Rectangle(150, 325, 185, 100);
+            if (isInputPressed && betMinusButton.Contains(x,y) && _betValue >=1)
+            {
+                _betValue--;
+            }
+
+            spinButton = new Rectangle(425, 325, 185, 100);
+            if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
+            {
+                _coinValue = _coinValue -= _betValue;
+            }
+            if (isInputClicked && spinButton.Contains(x, y)) //keeps animation going... for 3 seconds
+            {
+                Animation();
+                
+                spinTimer += gameTime.ElapsedGameTime;
+                if (spinTimer >= TimeSpan.FromSeconds(3))
+                {
+                  //  _coinValue = _coinValue -= _betValue;
+                    Spinning();
+                    spinTimer = TimeSpan.Zero;
+                    isInputClicked = false;
+                }
+            }
+            
+                                         
+                           
+        /*  if (GamePage.Current.SpinButtonClicked) //may change if touchpanel works and able to create own buttons w Monogame
            {
 
               Animation();
@@ -158,7 +192,7 @@ namespace NewCleanSlots
               }
              
            
-            }
+            }*/
           
 
         
@@ -181,7 +215,7 @@ namespace NewCleanSlots
             AnimationReel2Position = new Vector2(235, 65);
             AnimationReel3Position = new Vector2(435, 65);
             AnimationReel4Position = new Vector2(635, 65);
-            BetIncreaseButtonPosition = new Vector2(40, 365);
+            
 
            
            
@@ -207,9 +241,22 @@ namespace NewCleanSlots
 
             spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 200), Color.Purple);
 
-           // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
-            spriteBatch.Draw(BetIncreaseButton, betButton, Color.White);
+            spriteBatch.Draw(Button, spinButton, Color.White);
 
+           // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(Button, betAddButton, Color.White);
+
+            if (_betValue >=5)
+            {
+                spriteBatch.Draw(Button, betAddButton, Color.Gray);
+            }
+
+            spriteBatch.Draw(Button, betMinusButton, Color.White);
+
+            if (_betValue <=1)
+            {
+                spriteBatch.Draw(Button, betMinusButton, Color.Gray);
+            }
                               
             spriteBatch.End();
           
@@ -252,10 +299,12 @@ namespace NewCleanSlots
             }
           
 
-            animationFrame += 1;
+           // animationFrame += 1;
+            animationFrame++;
             if (animationFrame >= 8)
+            {
                 animationFrame = 0;
-
+            }
           
         }
 
@@ -351,17 +400,10 @@ namespace NewCleanSlots
                     {
                         _coinValue = _coinValue +=10;
                     }
+                  
         }
-
-        public void betIncrease()
-        {
-
-            _betValue++;
-
-           // if (_betValue >=1 && _betValue <=5)
-               
-                //MUST  find way enable and disable GamePage buttons or create buttons with Monogame.
-        }
+        
+      
       
 
     }

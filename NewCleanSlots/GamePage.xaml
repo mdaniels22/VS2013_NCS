@@ -9,9 +9,5 @@
 
     <Grid Margin="10,0,-10,0">
         <Button x:Name="Spin_btn" Content="Spin" HorizontalAlignment="Left" Margin="502,297,0,0" VerticalAlignment="Top" Click="Spin"/>
-        <Button x:Name="Bet_btn" Content="+" HorizontalAlignment="Left" Margin="290,297,0,0" VerticalAlignment="Top" Width="58"/>
-        <Button x:Name="BetMinus_btn" Content="-" HorizontalAlignment="Left" Margin="158,297,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="CoinValue" HorizontalAlignment="Left" Margin="50,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="158" Text="5"/>
-        <TextBlock x:Name="BetValue" HorizontalAlignment="Left" Margin="244,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="158" Text="1"/>
     </Grid>
 </SwapChainBackgroundPanel>

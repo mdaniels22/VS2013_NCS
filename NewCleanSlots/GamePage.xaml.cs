@@ -52,8 +52,7 @@ namespace NewCleanSlots
             Current = this; //made GamePage.Current.SpinButtonClicked work on Game1 page
         }
 
-        int _coinValue = 5;
-        int _betValue = 1;
+       
         
               
         public void Spin(object sender, RoutedEventArgs e)
@@ -104,7 +103,7 @@ namespace NewCleanSlots
         }
 
         
-        public void BetIncrease(object sender, RoutedEventArgs e)
+      /*  public void BetIncrease(object sender, RoutedEventArgs e)
         {
             BetIncreaseButtonClicked = true;
             
@@ -148,5 +147,5 @@ namespace NewCleanSlots
             }
             BetValue.Text = "" + _betValue;
         }
-    }
+    */}
 }
