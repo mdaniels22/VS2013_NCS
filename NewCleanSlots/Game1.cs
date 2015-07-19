@@ -141,19 +141,19 @@ namespace NewCleanSlots
           //create bet button. check to see if it is touch and if so increase bet
 
             //rectangle(x location , y location, width of sprite, height of sprite)
-          betAddButton = new Rectangle(275, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
+          betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
             if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 )
             {
                 _betValue++;
             }
 
-          betMinusButton = new Rectangle(150, 325, 185, 100);
+          betMinusButton = new Rectangle(100, 325, 185, 100);
             if (isInputPressed && betMinusButton.Contains(x,y) && _betValue >=1)
             {
                 _betValue--;
             }
 
-            spinButton = new Rectangle(425, 325, 185, 100);
+            spinButton = new Rectangle(525, 325, 185, 100);
             if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
             {
                 _coinValue = _coinValue -= _betValue;
@@ -237,9 +237,9 @@ namespace NewCleanSlots
             spriteBatch.Draw(AnimationReel4, AnimationReel4Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
 
-            spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(100, 100), Color.Purple);
+            spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
 
-            spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 200), Color.Purple);
+            spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 300), Color.Purple);
 
             spriteBatch.Draw(Button, spinButton, Color.White);
 

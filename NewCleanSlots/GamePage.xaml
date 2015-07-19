@@ -7,7 +7,5 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Margin="10,0,-10,0">
-        <Button x:Name="Spin_btn" Content="Spin" HorizontalAlignment="Left" Margin="502,297,0,0" VerticalAlignment="Top" Click="Spin"/>
-    </Grid>
+    <Grid Margin="10,0,-10,0"/>
 </SwapChainBackgroundPanel>

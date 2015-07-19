@@ -55,7 +55,7 @@ namespace NewCleanSlots
        
         
               
-        public void Spin(object sender, RoutedEventArgs e)
+     /*   public void Spin(object sender, RoutedEventArgs e)
         {
             //indicates Spin button is clicked
             SpinButtonClicked = true;
@@ -147,5 +147,5 @@ namespace NewCleanSlots
             }
             BetValue.Text = "" + _betValue;
         }
-    */}
+    }*/
 }
