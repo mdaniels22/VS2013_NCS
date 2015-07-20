@@ -25,7 +25,8 @@ namespace NewCleanSlots
             AnimationReel2,
             AnimationReel3,
             AnimationReel4,
-            Button;
+            Button,
+            Button_pressed;
 
         Vector2 FourReelsBackgroundPosition, 
             TotalCreditsBackgroundPosition,
@@ -98,7 +99,7 @@ namespace NewCleanSlots
             totalText = Content.Load<SpriteFont>("ArialFont");
             betText = Content.Load<SpriteFont>("ArialFont");
             Button = Content.Load<Texture2D>("Orange_btn 1");
-
+            Button_pressed = Content.Load<Texture2D>("Orange_btn_pressed");
             
         }
 
@@ -144,6 +145,7 @@ namespace NewCleanSlots
           betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
             if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 )
             {
+               
                 _betValue++;
             }
 
@@ -238,13 +240,22 @@ namespace NewCleanSlots
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
 
             spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
+            
 
             spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 300), Color.Purple);
 
             spriteBatch.Draw(Button, spinButton, Color.White);
+            if (isInputPressed && spinButton.Contains(x,y))
+            {
+                spriteBatch.Draw(Button_pressed, spinButton, Color.White);
+            }
 
            // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
             spriteBatch.Draw(Button, betAddButton, Color.White);
+            if (isInputPressed && betAddButton.Contains(x, y))
+            {
+                spriteBatch.Draw(Button_pressed, betAddButton, Color.White);
+            }
 
             if (_betValue >=5)
             {
@@ -252,12 +263,19 @@ namespace NewCleanSlots
             }
 
             spriteBatch.Draw(Button, betMinusButton, Color.White);
+            if (isInputPressed && betMinusButton.Contains(x, y))
+            {
+                spriteBatch.Draw(Button_pressed, betMinusButton, Color.White);
+            }
 
             if (_betValue <=1)
             {
                 spriteBatch.Draw(Button, betMinusButton, Color.Gray);
             }
-                              
+                             
+ 
+            
+
             spriteBatch.End();
           
             base.Draw(gameTime);
