@@ -13,9 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ArialFont.spritefont
+#begin Roboto.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:ArialFont.spritefont
+/build:Roboto.spritefont
 

@@ -84,7 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Content\ArialFont.spritefont" />
+    <None Include="Content\Roboto.spritefont" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

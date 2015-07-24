@@ -26,7 +26,7 @@ namespace NewCleanSlots
             AnimationReel3,
             AnimationReel4,
             Button,
-            Button_pressed;
+            Button_pressed; //not clickable//disabled
 
         Vector2 FourReelsBackgroundPosition, 
             TotalCreditsBackgroundPosition,
@@ -37,7 +37,8 @@ namespace NewCleanSlots
             
 
         SpriteFont totalText,
-            betText;
+            betText,
+            wonText;
 
         Rectangle betAddButton,
             betMinusButton,
@@ -51,8 +52,10 @@ namespace NewCleanSlots
            
         int _coinValue = 10,
             _betValue = 1,
+            _wonValue = 0,
             x = 0,
-            y = 0;
+            y = 0,
+            _previousCoinValue;
 
         bool isInputPressed = false;
         bool isInputClicked = false; // so spin button keeps animation() going.
@@ -96,8 +99,9 @@ namespace NewCleanSlots
             AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages");
             AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
-            totalText = Content.Load<SpriteFont>("ArialFont");
-            betText = Content.Load<SpriteFont>("ArialFont");
+            totalText = Content.Load<SpriteFont>("Roboto");
+            betText = Content.Load<SpriteFont>("Roboto");
+            wonText = Content.Load<SpriteFont>("Roboto");
             Button = Content.Load<Texture2D>("Orange_btn 1");
             Button_pressed = Content.Load<Texture2D>("Orange_btn_pressed");
             
@@ -158,7 +162,8 @@ namespace NewCleanSlots
             spinButton = new Rectangle(525, 325, 185, 100);
             if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
             {
-                _coinValue = _coinValue -= _betValue;
+                _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                _wonValue = 0;
             }
             if (isInputClicked && spinButton.Contains(x, y)) //keeps animation going... for 3 seconds
             {
@@ -170,7 +175,8 @@ namespace NewCleanSlots
                   //  _coinValue = _coinValue -= _betValue;
                     Spinning();
                     spinTimer = TimeSpan.Zero;
-                    isInputClicked = false;
+                    
+                   isInputClicked = false;
                 }
             }
             
@@ -239,15 +245,33 @@ namespace NewCleanSlots
             spriteBatch.Draw(AnimationReel4, AnimationReel4Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
 
-            spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
-            
+           // spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
+
+          // _previousCoinValue = _coinValue;
+            if (_coinValue> _previousCoinValue)
+            {
+                spriteBatch.DrawString(totalText, "TOTAL " + _coinValue, new Vector2(500, 300), Color.Green);
+            }
+            else if(_coinValue<_previousCoinValue)
+            {
+                spriteBatch.DrawString(totalText, "TOTAL " + _coinValue, new Vector2(500, 300), Color.Red);
+            }
+            else
+            {
+                spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
+            }
+            _previousCoinValue = _coinValue;
+
+
+            spriteBatch.DrawString(wonText, "WON " + _wonValue, new Vector2(100, 300), Color.Purple);
+
 
             spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 300), Color.Purple);
 
             spriteBatch.Draw(Button, spinButton, Color.White);
-            if (isInputPressed && spinButton.Contains(x,y))
+            if (isInputPressed && spinButton.Contains(x,y) || _coinValue <= 0)
             {
-                spriteBatch.Draw(Button_pressed, spinButton, Color.White);
+                spriteBatch.Draw(Button_pressed, spinButton, Color.White); 
             }
 
            // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
@@ -272,7 +296,7 @@ namespace NewCleanSlots
             {
                 spriteBatch.Draw(Button, betMinusButton, Color.Gray);
             }
-                             
+
  
             
 
@@ -401,22 +425,26 @@ namespace NewCleanSlots
 
             if (reel1 == 1 & reel2 == 1 & reel3 == 1 & reel4 == 1)
             {
-                _coinValue = _coinValue += 10; //increase the coinValue by 10
+                //_coinValue = _coinValue += 10;
+                _coinValue = _coinValue + (_betValue * 10); //increase the coinValue by 10 * betValue
 
-                //_coinValue shows in spritBatch draw               
+                _wonValue = _betValue * 10;               
                                 
             }
             else
                 if (reel1 == 2 & reel2 == 2 & reel3 == 2 & reel4 == 2)
                 {
-                    _coinValue = _coinValue += 10;
-
+                   // _coinValue = _coinValue += 10;
+                    _coinValue = _coinValue + (_betValue * 10);
+                    _wonValue = _betValue * 10;
 
                 }
                 else
                     if (reel1 == 3 & reel2 == 3 & reel3 == 3 & reel4 == 3)
                     {
-                        _coinValue = _coinValue +=10;
+                       // _coinValue = _coinValue +=10;
+                        _coinValue = _coinValue + (_betValue * 10);
+                        _wonValue = _betValue * 10;
                     }
                   
         }
