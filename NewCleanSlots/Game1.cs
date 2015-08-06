@@ -5,6 +5,7 @@ using GameFramework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
+
 using System;
 using System.Collections;
 using System.IO;
@@ -26,7 +27,7 @@ namespace NewCleanSlots
             AnimationReel3,
             AnimationReel4,
             Button,
-            Button_pressed; //not clickable//disabled
+            Button_pressed; 
 
         Vector2 FourReelsBackgroundPosition, 
             TotalCreditsBackgroundPosition,
@@ -59,8 +60,7 @@ namespace NewCleanSlots
 
         bool isInputPressed = false;
         bool isInputClicked = false; // so spin button keeps animation() going.
-
-           
+        /*bool onAnimation = false;*/ //is spinnning animaiton on. trying to disable touch input while animation is playing     
 
 
         public Game1()
@@ -140,44 +140,56 @@ namespace NewCleanSlots
               x = (int)touch.Position.X;
               y = (int)touch.Position.Y;
 
-              isInputPressed = touch.State == TouchLocationState.Pressed; //|| touch.State == TouchLocationState.Moved; 
-              isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released;
+              isInputPressed = touch.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
+              isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released ;
+             
           }
           //create bet button. check to see if it is touch and if so increase bet
 
             //rectangle(x location , y location, width of sprite, height of sprite)
           betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
-            if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 )
+        
+           if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 && _coinValue >0  /* && !onAnimation */)
             {
-               
                 _betValue++;
+                isInputPressed = false;
             }
 
           betMinusButton = new Rectangle(100, 325, 185, 100);
-            if (isInputPressed && betMinusButton.Contains(x,y) && _betValue >=1)
+            if (isInputPressed && betMinusButton.Contains(x,y) && _betValue >=1 && _coinValue >0  /* && !onAnimation*/)
             {
                 _betValue--;
+                isInputPressed = false;
             }
 
             spinButton = new Rectangle(525, 325, 185, 100);
-            if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
+           /*if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
             {
                 _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
                 _wonValue = 0;
-            }
-            if (isInputClicked && spinButton.Contains(x, y)) //keeps animation going... for 3 seconds
+            }*/
+            if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0 ) //keeps animation going... for 3 seconds
             {
+               // onAnimation = true;
                 Animation();
+               
                 
                 spinTimer += gameTime.ElapsedGameTime;
-                if (spinTimer >= TimeSpan.FromSeconds(3))
+                if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
                 {
                   //  _coinValue = _coinValue -= _betValue;
                     Spinning();
+
+                    _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                    _wonValue = 0;
+
                     spinTimer = TimeSpan.Zero;
                     
                    isInputClicked = false;
+                 //  onAnimation = false;
+                    
                 }
+                 
             }
             
                                          
@@ -269,9 +281,17 @@ namespace NewCleanSlots
             spriteBatch.DrawString(betText, "BET  " + _betValue, new Vector2(200, 300), Color.Purple);
 
             spriteBatch.Draw(Button, spinButton, Color.White);
-            if (isInputPressed && spinButton.Contains(x,y) || _coinValue <= 0)
+            if (isInputClicked && spinButton.Contains(x,y))
             {
-                spriteBatch.Draw(Button_pressed, spinButton, Color.White); 
+
+                 spriteBatch.Draw(Button_pressed, spinButton, Color.White);
+                 spriteBatch.Draw(Button_pressed, spinButton, Color.Gray);                    
+               
+            }
+
+            if (_coinValue <= 0)
+            {
+                spriteBatch.Draw(Button, spinButton, Color.Gray);
             }
 
            // spriteBatch.Draw(BetIncreaseButton, BetIncreaseButtonPosition, betButton, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
@@ -281,7 +301,7 @@ namespace NewCleanSlots
                 spriteBatch.Draw(Button_pressed, betAddButton, Color.White);
             }
 
-            if (_betValue >=5)
+            if (_betValue >=5 || _coinValue <= 0 || (isInputClicked && spinButton.Contains(x,y)))
             {
                 spriteBatch.Draw(Button, betAddButton, Color.Gray);
             }
@@ -292,7 +312,7 @@ namespace NewCleanSlots
                 spriteBatch.Draw(Button_pressed, betMinusButton, Color.White);
             }
 
-            if (_betValue <=1)
+            if (_betValue <=1 || _coinValue <=0 || (isInputClicked && spinButton.Contains(x,y)))
             {
                 spriteBatch.Draw(Button, betMinusButton, Color.Gray);
             }
