@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
 
+
 using System;
 using System.Collections;
 using System.IO;
@@ -43,7 +44,8 @@ namespace NewCleanSlots
 
         Rectangle betAddButton,
             betMinusButton,
-            spinButton;
+            spinButton; 
+           
 
         int animationFrame = 0;
 
@@ -60,7 +62,8 @@ namespace NewCleanSlots
 
         bool isInputPressed = false;
         bool isInputClicked = false; // so spin button keeps animation() going.
-        /*bool onAnimation = false;*/ //is spinnning animaiton on. trying to disable touch input while animation is playing     
+        bool animationOn = false;
+             
 
 
         public Game1()
@@ -130,92 +133,80 @@ namespace NewCleanSlots
 
          UpdateAll(gameTime);   //method from GameFramework     
 
-         var _touches = TouchPanel.GetState();
-
-            
-       //check if screen is touched
-          if (_touches.Count >=1)
-          {
-              var touch = _touches[0];
-              x = (int)touch.Position.X;
-              y = (int)touch.Position.Y;
-
-              isInputPressed = touch.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
-              isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released ;
-             
-          }
-          //create bet button. check to see if it is touch and if so increase bet
-
-            //rectangle(x location , y location, width of sprite, height of sprite)
-          betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
-        
-           if(isInputPressed && betAddButton.Contains(x,y) && _betValue < 5 && _coinValue >0  /* && !onAnimation */)
-            {
-                _betValue++;
-                isInputPressed = false;
-            }
-
-          betMinusButton = new Rectangle(100, 325, 185, 100);
-            if (isInputPressed && betMinusButton.Contains(x,y) && _betValue >=1 && _coinValue >0  /* && !onAnimation*/)
-            {
-                _betValue--;
-                isInputPressed = false;
-            }
-
-            spinButton = new Rectangle(525, 325, 185, 100);
-           /*if (isInputPressed && spinButton.Contains(x,y)) //coinValue shows as soon as spinButton is clicked
-            {
-                _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
-                _wonValue = 0;
-            }*/
-            if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0 ) //keeps animation going... for 3 seconds
-            {
-               // onAnimation = true;
-                Animation();
-               
-                
-                spinTimer += gameTime.ElapsedGameTime;
-                if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
-                {
-                  //  _coinValue = _coinValue -= _betValue;
-                    Spinning();
-
-                    _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
-                    _wonValue = 0;
-
-                    spinTimer = TimeSpan.Zero;
-                    
-                   isInputClicked = false;
-                 //  onAnimation = false;
-                    
-                }
-                 
-            }
-            
-                                         
-                           
-        /*  if (GamePage.Current.SpinButtonClicked) //may change if touchpanel works and able to create own buttons w Monogame
-           {
-
-              Animation();
-              //Spinning();
-              spinTimer += gameTime.ElapsedGameTime;
-              
-
-              if(spinTimer >= TimeSpan.FromSeconds(3))
-              {
-                  Spinning();
-                  GamePage.Current.SpinButtonClicked = false;
-                 // AnimationReels = Content.Load<Texture2D>("AnimationReelImages");
-                  spinTimer = TimeSpan.Zero;
-
-              }
-             
-           
-            }*/
           
+        /* TouchCollection touchCollection;
 
-        
+         touchCollection = TouchPanel.GetState();
+
+         foreach (TouchLocation tl in touchCollection)
+                             
+             x = (int)tl.Position.X;
+             y = (int)tl.Position.Y;
+
+             isInputPressed = tl.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
+             isInputClicked = tl.State == TouchLocationState.Pressed || tl.State == TouchLocationState.Released;
+           */
+
+         if (!animationOn)
+         {
+             var _touches = TouchPanel.GetState();
+
+             //check if screen is touched
+             if (_touches.Count >= 1)
+             {
+                 var touch = _touches[0];
+                 x = (int)touch.Position.X;
+                 y = (int)touch.Position.Y;
+
+                 isInputPressed = touch.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
+                 isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released;
+             }
+
+
+             if (isInputPressed && betAddButton.Contains(x, y) && _betValue < 5 && _coinValue > 0)
+             {
+                 _betValue++;
+                 isInputPressed = false;
+             }
+
+
+             if (isInputPressed && betMinusButton.Contains(x, y) && _betValue >= 1 && _coinValue > 0)
+             {
+                 _betValue--;
+                 isInputPressed = false;
+             }
+
+
+             if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0) //keeps animation going... for 3 seconds
+             {
+
+                 Animation(gameTime);
+
+
+
+                 spinTimer += gameTime.ElapsedGameTime;
+                 if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
+                 {
+                     //  _coinValue = _coinValue -= _betValue;
+                     Spinning();
+
+                     _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                     _wonValue = 0;
+
+                     spinTimer = TimeSpan.Zero;
+
+                     isInputClicked = false;
+
+                    // animationOn = false;
+
+
+                 }
+
+             }
+
+
+         }
+         
             base.Update(gameTime);
         }
 
@@ -235,12 +226,16 @@ namespace NewCleanSlots
             AnimationReel2Position = new Vector2(235, 65);
             AnimationReel3Position = new Vector2(435, 65);
             AnimationReel4Position = new Vector2(635, 65);
-            
 
-           
-           
+            //BUTTONS   rectangle(x location , y location, width of sprite, height of sprite)
+            betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
+            betMinusButton = new Rectangle(100, 325, 185, 100);
+            spinButton = new Rectangle(525, 325, 185, 100);
+
+
 
             spriteBatch.Begin();
+
             //image,postion,rectangle,color,rotation,origin,scale,effect,depth
             spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
             spriteBatch.Draw(TotalCreditsBackground, TotalCreditsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0f);
@@ -326,8 +321,10 @@ namespace NewCleanSlots
         }
 
 
-        public void Animation()
+        public void Animation(GameTime gameTime) //added GameTime gameTime as paramater so gameTime spinTimer would work
         {
+            animationOn = true;
+
             //Code for animation
             AnimationReel1 = Content.Load<Texture2D>("AnimationReelImages"); //everytime animation begins it starts with the AnimationReelImages
             AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
@@ -367,7 +364,17 @@ namespace NewCleanSlots
             {
                 animationFrame = 0;
             }
+
+         /*  spinTimer += gameTime.ElapsedGameTime; //GameTime gameTime
+            if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
+            {
+
+                animationOn = false;
+                spinTimer = TimeSpan.Zero;
           
+           } */
+
+            animationOn = false;
         }
 
         
