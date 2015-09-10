@@ -174,7 +174,7 @@ namespace NewCleanSlots
                      }
 
 
-                     if (isInputPressed && betMinusButton.Contains(x, y) && _betValue >= 1 && _coinValue > 0)
+                     if (isInputPressed && betMinusButton.Contains(x, y) && _betValue > 1 && _coinValue > 0)
                      {
                          _betValue--;
                          isInputPressed = false;
@@ -187,7 +187,7 @@ namespace NewCleanSlots
                        //  Animation();
 
                          Spinning();
-                         isInputClicked = false;
+                         //isInputClicked = false;
                         
                            /*  WinCheck();
                              _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
