@@ -47,6 +47,7 @@ namespace NewCleanSlots
             spinButton; 
            
 
+
         int animationFrame = 0;
 
 
@@ -60,12 +61,16 @@ namespace NewCleanSlots
             y = 0,
             _previousCoinValue;
 
+        int reel1,
+            reel2,
+            reel3,
+            reel4;
+
         bool isInputPressed = false;
         bool isInputClicked = false; // so spin button keeps animation() going.
-        bool animationOn = false;
-             
-
-
+        bool isInputReleased = false;    
+                   
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -133,24 +138,10 @@ namespace NewCleanSlots
 
          UpdateAll(gameTime);   //method from GameFramework     
 
-          
-        /* TouchCollection touchCollection;
-
-         touchCollection = TouchPanel.GetState();
-
-         foreach (TouchLocation tl in touchCollection)
-                             
-             x = (int)tl.Position.X;
-             y = (int)tl.Position.Y;
-
-             isInputPressed = tl.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
-             isInputClicked = tl.State == TouchLocationState.Pressed || tl.State == TouchLocationState.Released;
-           */
-
-         if (!animationOn)
-         {
-             var _touches = TouchPanel.GetState();
-
+ 
+                    
+             TouchCollection _touches = TouchPanel.GetState();
+/*
              //check if screen is touched
              if (_touches.Count >= 1)
              {
@@ -160,54 +151,83 @@ namespace NewCleanSlots
 
                  isInputPressed = touch.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved; 
                  isInputClicked = touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Released;
+                                 
              }
+*/
 
-
-             if (isInputPressed && betAddButton.Contains(x, y) && _betValue < 5 && _coinValue > 0)
+             foreach (TouchLocation tl in _touches)
+               
+            
              {
-                 _betValue++;
-                 isInputPressed = false;
-             }
+                 
+                     x = (int)tl.Position.X;
+                     y = (int)tl.Position.Y;
+
+                     isInputPressed = tl.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved;  
+                     isInputClicked = tl.State == TouchLocationState.Pressed || tl.State == TouchLocationState.Moved;
+                 isInputReleased = tl.State == TouchLocationState.Released;
+
+                     if (isInputPressed && betAddButton.Contains(x, y) && _betValue < 5 && _coinValue > 0)
+                     {
+                         _betValue++;
+                         isInputPressed = false;
+                     }
 
 
-             if (isInputPressed && betMinusButton.Contains(x, y) && _betValue >= 1 && _coinValue > 0)
-             {
-                 _betValue--;
-                 isInputPressed = false;
-             }
+                     if (isInputPressed && betMinusButton.Contains(x, y) && _betValue >= 1 && _coinValue > 0)
+                     {
+                         _betValue--;
+                         isInputPressed = false;
+                     }
 
 
-             if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0) //keeps animation going... for 3 seconds
-             {
+                     if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0) //keeps animation going... for 3 seconds
+                     {
 
-                 Animation(gameTime);
+                       //  Animation();
+
+                         Spinning();
+                         isInputClicked = false;
+                        
+                           /*  WinCheck();
+                             _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                             _wonValue = 0;
+
+                             isInputClicked = false;
+                            * /
+                         
+                       /*  spinTimer += gameTime.ElapsedGameTime;
+
+                         if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
+                         {
+                             //  _coinValue = _coinValue -= _betValue;
+                             Spinning();
+
+                             _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                             _wonValue = 0;
+
+                             spinTimer = TimeSpan.Zero;
+
+                             isInputClicked = false;
 
 
-
-                 spinTimer += gameTime.ElapsedGameTime;
-                 if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
+                         }
+*/
+                     }
+                 if(isInputReleased && spinButton.Contains(x,y) && _coinValue > 0)
                  {
-                     //  _coinValue = _coinValue -= _betValue;
-                     Spinning();
-
+                     WinCheck(reel1, reel2, reel3, reel4);
                      _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
                      _wonValue = 0;
 
-                     spinTimer = TimeSpan.Zero;
-
-                     isInputClicked = false;
-
-                    // animationOn = false;
-
-
+                     isInputReleased = false;
                  }
-
+                 
              }
 
-
-         }
-         
+      
             base.Update(gameTime);
+            
         }
 
        
@@ -278,7 +298,7 @@ namespace NewCleanSlots
             spriteBatch.Draw(Button, spinButton, Color.White);
             if (isInputClicked && spinButton.Contains(x,y))
             {
-
+                
                  spriteBatch.Draw(Button_pressed, spinButton, Color.White);
                  spriteBatch.Draw(Button_pressed, spinButton, Color.Gray);                    
                
@@ -321,74 +341,69 @@ namespace NewCleanSlots
         }
 
 
-        public void Animation(GameTime gameTime) //added GameTime gameTime as paramater so gameTime spinTimer would work
+        public void Animation()
         {
-            animationOn = true;
 
-            //Code for animation
-            AnimationReel1 = Content.Load<Texture2D>("AnimationReelImages"); //everytime animation begins it starts with the AnimationReelImages
-            AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
-            AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages"); 
-            AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
-
-            //sprite continues to move down and then jumps to the top
-            AnimationReel1Position.Y += 5;
-            if (AnimationReel1Position.Y >= 120) //>= GraphicsDevice.Viewport.Height). If the Y coordinats of animation goes below 120...
-                // spritePosition.Y = 0; 
-                //sprite jumps to the negative position based on the height of the sprite
-                //negative bc it above the 0 position, above the screen
-                AnimationReel1Position.Y = 65; //= -spriteSheet.Height;.....the Y coordinates of the animation jumps back up to 65
-
-            AnimationReel2Position.Y += 5;
-            if (AnimationReel2Position.Y >= 120)
-            {
-                AnimationReel2Position.Y = 65;
-            }
-
-            AnimationReel3Position.Y += 5;
-            if (AnimationReel3Position.Y >= 120)
-            {
-                AnimationReel3Position.Y = 65;
-            }
-
-            AnimationReel4Position.Y += 5;
-            if (AnimationReel4Position.Y >= 120)
-            {
-                AnimationReel4Position.Y = 65;
-            }
-          
-
-           // animationFrame += 1;
-            animationFrame++;
-            if (animationFrame >= 8)
-            {
+             //animationFrame += 1;
+          animationFrame++;
+          if (animationFrame >= 8)
+           {
                 animationFrame = 0;
             }
 
-         /*  spinTimer += gameTime.ElapsedGameTime; //GameTime gameTime
-            if (spinTimer >= TimeSpan.FromSeconds(3)) //begins code after 3 seconds
-            {
-
-                animationOn = false;
-                spinTimer = TimeSpan.Zero;
           
-           } */
 
-            animationOn = false;
-        }
 
-        
+
+                //Code for animation
+                AnimationReel1 = Content.Load<Texture2D>("AnimationReelImages"); //everytime animation begins it starts with the AnimationReelImages
+                AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
+                AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages");
+                AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
+
+                //sprite continues to move down and then jumps to the top
+                AnimationReel1Position.Y += 5;
+                if (AnimationReel1Position.Y >= 120) //>= GraphicsDevice.Viewport.Height). If the Y coordinats of animation goes below 120...
+                    // spritePosition.Y = 0; 
+                    //sprite jumps to the negative position based on the height of the sprite
+                    //negative bc it above the 0 position, above the screen
+                    AnimationReel1Position.Y = 65; //= -spriteSheet.Height;.....the Y coordinates of the animation jumps back up to 65
+
+                AnimationReel2Position.Y += 5;
+                if (AnimationReel2Position.Y >= 120)
+                {
+                    AnimationReel2Position.Y = 65;
+                }
+
+                AnimationReel3Position.Y += 5;
+                if (AnimationReel3Position.Y >= 120)
+                {
+                    AnimationReel3Position.Y = 65;
+                }
+
+                AnimationReel4Position.Y += 5;
+                if (AnimationReel4Position.Y >= 120)
+                {
+                    AnimationReel4Position.Y = 65;
+                }
+            
+            }
+
+
+
+
         
         public void Spinning() //Displays Image based on random number, checkes for winning combo, 
         {
-            animationFrame = 0; //resets the animationFrame back to 0
-            AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
+           // animationFrame = 0; //resets the animationFrame back to 0
+           
+            //AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
 
            Random rand = new Random(); //initiates random class
-            int reel1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
-            int reel2 = rand.Next(1, 4);
-            int reel3 = rand.Next(1, 4);
-            int reel4 = rand.Next(1, 4);
+             reel1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
+             reel2 = rand.Next(1, 4);
+             reel3 = rand.Next(1, 4);
+             reel4 = rand.Next(1, 4);
 
             switch (reel1)
             {
@@ -404,7 +419,8 @@ namespace NewCleanSlots
 
                 case 3:
                     AnimationReel1 = Content.Load<Texture2D>("Reel_Images_Diamond1");
-                    
+
+
                     break;
 
 
@@ -446,7 +462,11 @@ namespace NewCleanSlots
                     AnimationReel4 = Content.Load<Texture2D>("Reel_Images_Diamond1");
                     break;
             }
+                       
+        }
           
+        public void WinCheck(int reel1, int reel2, int reel3, int reel4)
+        {
             //Check for winning Combos
           //  int _coinValue = 5;
 
