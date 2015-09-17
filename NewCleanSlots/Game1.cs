@@ -44,7 +44,8 @@ namespace NewCleanSlots
 
         Rectangle betAddButton,
             betMinusButton,
-            spinButton; 
+            spinButton,
+            release_spinButton; 
            
 
 
@@ -156,7 +157,7 @@ namespace NewCleanSlots
 */
 
              foreach (TouchLocation tl in _touches)
-               
+              
             
              {
                  
@@ -164,8 +165,8 @@ namespace NewCleanSlots
                      y = (int)tl.Position.Y;
 
                      isInputPressed = tl.State == TouchLocationState.Pressed;  //|| touch.State == TouchLocationState.Moved;  
-                     isInputClicked = tl.State == TouchLocationState.Pressed || tl.State == TouchLocationState.Moved;
-                 isInputReleased = tl.State == TouchLocationState.Released;
+                     isInputClicked=  tl.State == TouchLocationState.Pressed || tl.State == TouchLocationState.Moved;
+                     isInputReleased = tl.State == TouchLocationState.Released;
 
                      if (isInputPressed && betAddButton.Contains(x, y) && _betValue < 5 && _coinValue > 0)
                      {
@@ -185,9 +186,11 @@ namespace NewCleanSlots
                      {
 
                        //  Animation();
+                         _wonValue = 0;
 
                          Spinning();
-                         //isInputClicked = false;
+                         
+                         isInputClicked = false;
                         
                            /*  WinCheck();
                              _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
@@ -213,12 +216,13 @@ namespace NewCleanSlots
 
                          }
 */
+
                      }
                  if(isInputReleased && spinButton.Contains(x,y) && _coinValue > 0)
                  {
                      WinCheck(reel1, reel2, reel3, reel4);
                      _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
-                     _wonValue = 0;
+                    // _wonValue = 0;
 
                      isInputReleased = false;
                  }
@@ -251,7 +255,7 @@ namespace NewCleanSlots
             betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
             betMinusButton = new Rectangle(100, 325, 185, 100);
             spinButton = new Rectangle(525, 325, 185, 100);
-
+            //release_spinButton = new Rectangle(520,320,200,115); //when spin button is released outside of button area the wincheck() will still start
 
 
             spriteBatch.Begin();
@@ -475,7 +479,7 @@ namespace NewCleanSlots
                 //_coinValue = _coinValue += 10;
                 _coinValue = _coinValue + (_betValue * 10); //increase the coinValue by 10 * betValue
 
-                _wonValue = _betValue * 10;               
+                _wonValue = _wonValue + (_betValue * 10);               
                                 
             }
             else
@@ -483,7 +487,7 @@ namespace NewCleanSlots
                 {
                    // _coinValue = _coinValue += 10;
                     _coinValue = _coinValue + (_betValue * 10);
-                    _wonValue = _betValue * 10;
+                    _wonValue = _wonValue + (_betValue * 10);
 
                 }
                 else
@@ -491,7 +495,7 @@ namespace NewCleanSlots
                     {
                        // _coinValue = _coinValue +=10;
                         _coinValue = _coinValue + (_betValue * 10);
-                        _wonValue = _betValue * 10;
+                        _wonValue = _wonValue + (_betValue * 10);
                     }
                   
         }
