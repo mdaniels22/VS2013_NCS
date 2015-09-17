@@ -185,12 +185,12 @@ namespace NewCleanSlots
                      if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0) //keeps animation going... for 3 seconds
                      {
 
-                       //  Animation();
+                        Animation();
                          _wonValue = 0;
 
-                         Spinning();
+                        // Spinning();
                          
-                         isInputClicked = false;
+                        isInputClicked = false;
                         
                            /*  WinCheck();
                              _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
@@ -220,6 +220,8 @@ namespace NewCleanSlots
                      }
                  if(isInputReleased && spinButton.Contains(x,y) && _coinValue > 0)
                  {
+                     Spinning();
+
                      WinCheck(reel1, reel2, reel3, reel4);
                      _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
                     // _wonValue = 0;
@@ -399,9 +401,9 @@ namespace NewCleanSlots
         
         public void Spinning() //Displays Image based on random number, checkes for winning combo, 
         {
-           // animationFrame = 0; //resets the animationFrame back to 0
+            animationFrame = 0; //resets the animationFrame back to 0
            
-            //AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
+            AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
 
            Random rand = new Random(); //initiates random class
              reel1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
