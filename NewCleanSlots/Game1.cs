@@ -44,9 +44,8 @@ namespace NewCleanSlots
 
         Rectangle betAddButton,
             betMinusButton,
-            spinButton,
-            release_spinButton; 
-           
+            spinButton;
+                      
 
 
         int animationFrame = 0;
@@ -181,8 +180,16 @@ namespace NewCleanSlots
                          isInputPressed = false;
                      }
 
+                    
+                 
+                   if(isInputPressed && spinButton.Contains(x,y) && _coinValue > 0 )
+                    {
+                        _coinValue -= _betValue;
+                        isInputPressed = false;
+                    }
 
-                     if (isInputClicked && spinButton.Contains(x, y) && _coinValue > 0) //keeps animation going... for 3 seconds
+
+                     if (isInputClicked && spinButton.Contains(x, y) && _coinValue > -1) //keeps animation going... for 3 seconds
                      {
 
                         Animation();
@@ -218,12 +225,12 @@ namespace NewCleanSlots
 */
 
                      }
-                 if(isInputReleased && spinButton.Contains(x,y) && _coinValue > 0)
+                 if(isInputReleased && spinButton.Contains(x,y) && _coinValue > -1)
                  {
                      Spinning();
 
                      WinCheck(reel1, reel2, reel3, reel4);
-                     _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
+                   //  _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
                     // _wonValue = 0;
 
                      isInputReleased = false;
@@ -257,8 +264,7 @@ namespace NewCleanSlots
             betAddButton = new Rectangle(300, 325, 185, 100); //rectangle will not show anything untill draw() is created w sprite
             betMinusButton = new Rectangle(100, 325, 185, 100);
             spinButton = new Rectangle(525, 325, 185, 100);
-            //release_spinButton = new Rectangle(520,320,200,115); //when spin button is released outside of button area the wincheck() will still start
-
+            
 
             spriteBatch.Begin();
 
@@ -306,7 +312,7 @@ namespace NewCleanSlots
             {
                 
                  spriteBatch.Draw(Button_pressed, spinButton, Color.White);
-                 spriteBatch.Draw(Button_pressed, spinButton, Color.Gray);                    
+                // spriteBatch.Draw(Button_pressed, spinButton, Color.Gray);                    
                
             }
 
@@ -333,7 +339,7 @@ namespace NewCleanSlots
                 spriteBatch.Draw(Button_pressed, betMinusButton, Color.White);
             }
 
-            if (_betValue <=1 || _coinValue <=0 || (isInputClicked && spinButton.Contains(x,y)))
+            if (_betValue <=1 || _coinValue <= 0 || (isInputClicked && spinButton.Contains(x,y)))
             {
                 spriteBatch.Draw(Button, betMinusButton, Color.Gray);
             }
@@ -406,26 +412,38 @@ namespace NewCleanSlots
             AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
 
            Random rand = new Random(); //initiates random class
-             reel1 = rand.Next(1, 4); //assigns num with a random number between 1-3. random # is stored in num
-             reel2 = rand.Next(1, 4);
-             reel3 = rand.Next(1, 4);
-             reel4 = rand.Next(1, 4);
+             reel1 = rand.Next(1, 8); //assigns num with a random number between 1-7. 6 reel images random # is stored in num
+             reel2 = rand.Next(1, 8);
+             reel3 = rand.Next(1, 8);
+             reel4 = rand.Next(1, 8);
 
             switch (reel1)
             {
                 case 1:
-                    AnimationReel1 = Content.Load<Texture2D>("Reel_Images_Bar1");
+                    AnimationReel1 = Content.Load<Texture2D>("BAR");
                     
                     break;
 
                 case 2:
-                    AnimationReel1 = Content.Load<Texture2D>("Reel_Images_Star1");
+                    AnimationReel1 = Content.Load<Texture2D>("Star");
                    
                     break;
 
                 case 3:
-                    AnimationReel1 = Content.Load<Texture2D>("Reel_Images_Diamond1");
-
+                    AnimationReel1 = Content.Load<Texture2D>("Diamond");
+                    break;
+                case 4:
+                    AnimationReel1 = Content.Load<Texture2D>("BAR2");
+                    break;
+                case 5:
+                    AnimationReel1 = Content.Load<Texture2D>("BAR3");
+                    break;
+                case 6:
+                    AnimationReel1 = Content.Load<Texture2D>("Cherry");
+                    break;
+                case 7:
+                    AnimationReel1 = Content.Load<Texture2D>("Seven");
+                    
 
                     break;
 
@@ -434,38 +452,75 @@ namespace NewCleanSlots
             switch (reel2)
             { 
                 case 1:
-                    AnimationReel2 = Content.Load<Texture2D>("Reel_Images_Bar1");
+                    AnimationReel2 = Content.Load<Texture2D>("BAR");
                     break;
                 case 2:
-                    AnimationReel2 = Content.Load<Texture2D>("Reel_Images_Star1");
+                    AnimationReel2 = Content.Load<Texture2D>("Star");
                     break;
                 case   3:
-                    AnimationReel2 = Content.Load<Texture2D>("Reel_Images_Diamond1");
+                    AnimationReel2 = Content.Load<Texture2D>("Diamond");
                     break;
+                case 4:
+                    AnimationReel2 = Content.Load<Texture2D>("BAR2");
+                    break;
+                case 5:
+                    AnimationReel2 = Content.Load<Texture2D>("BAR3");
+                    break;
+                case 6:
+                    AnimationReel2 = Content.Load<Texture2D>("Cherry");
+                    break;
+                case 7:
+                    AnimationReel2 = Content.Load<Texture2D>("Seven");
+                    break;
+
 
             }
             switch (reel3)
             {
                 case 1:
-                    AnimationReel3 = Content.Load<Texture2D>("Reel_Images_Bar1");
+                    AnimationReel3 = Content.Load<Texture2D>("BAR");
                     break;
                 case 2:
-                    AnimationReel3 = Content.Load<Texture2D>("Reel_Images_Star1");
+                    AnimationReel3 = Content.Load<Texture2D>("Star");
                     break;
                 case 3:
-                    AnimationReel3 = Content.Load<Texture2D>("Reel_Images_Diamond1");
+                    AnimationReel3 = Content.Load<Texture2D>("Diamond");
+                    break;
+                case 4:
+                    AnimationReel3 = Content.Load<Texture2D>("BAR2");
+                    break;
+                case 5:
+                    AnimationReel3 = Content.Load<Texture2D>("BAR3");
+                    break;
+                case 6:
+                    AnimationReel3 = Content.Load<Texture2D>("Cherry");
+                    break;
+                case 7:
+                    AnimationReel3 = Content.Load<Texture2D>("Seven");
                     break;
             }
             switch (reel4)
             {
                 case 1:
-                    AnimationReel4 = Content.Load<Texture2D>("Reel_Images_Bar1");
+                    AnimationReel4 = Content.Load<Texture2D>("BAR");
                     break;
                 case 2:
-                    AnimationReel4 = Content.Load<Texture2D>("Reel_Images_Star1");
+                    AnimationReel4 = Content.Load<Texture2D>("Star");
                     break;
                 case 3:
-                    AnimationReel4 = Content.Load<Texture2D>("Reel_Images_Diamond1");
+                    AnimationReel4 = Content.Load<Texture2D>("Diamond");
+                    break;
+                case 4:
+                    AnimationReel4 = Content.Load<Texture2D>("BAR2");
+                    break;
+                case 5:
+                    AnimationReel4 = Content.Load<Texture2D>("BAR3");
+                    break;
+                case 6:
+                    AnimationReel4 = Content.Load<Texture2D>("Cherry");
+                    break;
+                case 7:
+                    AnimationReel4 = Content.Load<Texture2D>("Seven");
                     break;
             }
                        
@@ -499,7 +554,27 @@ namespace NewCleanSlots
                         _coinValue = _coinValue + (_betValue * 10);
                         _wonValue = _wonValue + (_betValue * 10);
                     }
-                  
+                   else
+                        if (reel1 == 4 & reel2 == 4 & reel3 == 4 & reel4 == 4)
+                        {
+                            // _coinValue = _coinValue +=10;
+                            _coinValue = _coinValue + (_betValue * 10);
+                            _wonValue = _wonValue + (_betValue * 10);
+                        }
+                        else
+                            if (reel1 == 5 & reel2 == 5 & reel3 == 5 & reel4 == 5)
+                            {
+                                // _coinValue = _coinValue +=10;
+                                _coinValue = _coinValue + (_betValue * 10);
+                                _wonValue = _wonValue + (_betValue * 10);
+                            }
+                            else
+                                if (reel1 == 6 & reel2 == 6 & reel3 == 6 & reel4 == 6)
+                                {
+                                    // _coinValue = _coinValue +=10;
+                                    _coinValue = _coinValue + (_betValue * 10);
+                                    _wonValue = _wonValue + (_betValue * 10);
+                                }
         }
         
       

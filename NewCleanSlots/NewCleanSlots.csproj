@@ -116,6 +116,12 @@
     <Content Include="Assets\WideLogo.scale-100.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Content\AnimationReelImages.png" />
+    <Content Include="Content\BAR.png" />
+    <Content Include="Content\BAR2.png" />
+    <Content Include="Content\BAR3.png" />
+    <Content Include="Content\Cherry.png" />
+    <Content Include="Content\Cherry3.png" />
+    <Content Include="Content\Diamond.png" />
     <Content Include="Content\Four_Reels_bkgrnd.png" />
     <Content Include="Content\Orange_btn 1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -137,6 +143,10 @@
     <Content Include="Content\Reel_Images_Star1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Reel_Images_ThreeBars.png" />
+    <Content Include="Content\Reel_Images_TwoBars.png" />
+    <Content Include="Content\Seven.png" />
+    <Content Include="Content\Star.png" />
     <Content Include="Content\Total_Credits_bkgrnd.png" />
   </ItemGroup>
   <ItemGroup>
