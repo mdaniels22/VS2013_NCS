@@ -169,8 +169,11 @@ namespace NewCleanSlots
 
                      if (isInputPressed && betAddButton.Contains(x, y) && _betValue < 5 && _coinValue > 0)
                      {
-                         _betValue++;
-                         isInputPressed = false;
+                         if (_betValue < _coinValue)
+                         {
+                             _betValue++;
+                             isInputPressed = false;
+                         }
                      }
 
 
@@ -182,14 +185,15 @@ namespace NewCleanSlots
 
                     
                  
-                   if(isInputPressed && spinButton.Contains(x,y) && _coinValue > 0 )
+                /*   if(isInputPressed && spinButton.Contains(x,y) && _coinValue > 0 )
                     {
                         _coinValue -= _betValue;
                         isInputPressed = false;
                     }
+                 */
 
 
-                     if (isInputClicked && spinButton.Contains(x, y) && _coinValue > -1) //keeps animation going... for 3 seconds
+                     if (isInputClicked && spinButton.Contains(x, y) && _coinValue >= 1) //keeps animation going... for 3 seconds
                      {
 
                         Animation();
@@ -225,7 +229,7 @@ namespace NewCleanSlots
 */
 
                      }
-                 if(isInputReleased && spinButton.Contains(x,y) && _coinValue > -1)
+                 if(isInputReleased && spinButton.Contains(x,y) && _coinValue >= 1)
                  {
                      Spinning();
 
@@ -233,7 +237,11 @@ namespace NewCleanSlots
                    //  _coinValue = _coinValue -= _betValue; //_coinValue -= _betValue;
                     // _wonValue = 0;
 
+                     _coinValue -= _betValue;
+
                      isInputReleased = false;
+
+                     _betValue = 1;
                  }
                  
              }
