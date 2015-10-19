@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using GameFramework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using GameFramework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
-
-
-
 using System;
 using System.Collections;
 using System.IO;
@@ -51,7 +48,7 @@ namespace NewCleanSlots
         int animationFrame = 0;
 
 
-        TimeSpan spinTimer = TimeSpan.Zero;
+       // TimeSpan spinTimer = TimeSpan.Zero;
 
            
         int _coinValue = 10,
@@ -289,13 +286,16 @@ namespace NewCleanSlots
             spriteBatch.Draw(AnimationReel3, AnimationReel3Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
                0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
 
+            
             spriteBatch.Draw(AnimationReel4, AnimationReel4Position, new Rectangle(animationFrame * 75, 0, 75, 75), Color.White,
-               0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+                   0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.5f);
+            
 
+           
            // spriteBatch.DrawString(totalText, "TOTAL  " + _coinValue, new Vector2(500, 300), Color.Purple);
 
           // _previousCoinValue = _coinValue;
-            if (_coinValue> _previousCoinValue)
+            if (_coinValue > _previousCoinValue)
             {
                 spriteBatch.DrawString(totalText, "TOTAL " + _coinValue, new Vector2(500, 300), Color.Green);
             }
@@ -353,6 +353,10 @@ namespace NewCleanSlots
             }
 
  
+
+
+
+
             
 
             spriteBatch.End();
@@ -380,6 +384,7 @@ namespace NewCleanSlots
                 AnimationReel2 = Content.Load<Texture2D>("AnimationReelImages");
                 AnimationReel3 = Content.Load<Texture2D>("AnimationReelImages");
                 AnimationReel4 = Content.Load<Texture2D>("AnimationReelImages");
+                
 
                 //sprite continues to move down and then jumps to the top
                 AnimationReel1Position.Y += 5;
@@ -400,13 +405,13 @@ namespace NewCleanSlots
                 {
                     AnimationReel3Position.Y = 65;
                 }
-
-                AnimationReel4Position.Y += 5;
-                if (AnimationReel4Position.Y >= 120)
-                {
-                    AnimationReel4Position.Y = 65;
-                }
-            
+                
+                    AnimationReel4Position.Y += 5;
+                    if (AnimationReel4Position.Y >= 120)
+                    {
+                        AnimationReel4Position.Y = 65;
+                    }
+                
             }
 
 
@@ -420,43 +425,188 @@ namespace NewCleanSlots
             AnimationReel1Position.Y = 65; //resets the Y coordinats of the animation. Change later so Random reel image displays closer to center
 
            Random rand = new Random(); //initiates random class
-             reel1 = rand.Next(1, 8); //assigns num with a random number between 1-7. 6 reel images random # is stored in num
-             reel2 = rand.Next(1, 8);
-             reel3 = rand.Next(1, 8);
-             reel4 = rand.Next(1, 8);
+             reel1 = rand.Next(1, 26); //assigns num with a random number between 1-7. 6 reel images random # is stored in num
+             reel2 = rand.Next(1, 26);
+             reel3 = rand.Next(1, 26);
+             reel4 = rand.Next(1, 26);
 
-            switch (reel1)
+        //Reel1 random image
+             if (reel1 == 1)
+             {
+                 AnimationReel1 = Content.Load<Texture2D>("Diamond");
+             }
+             else
+             if(reel1 > 1 && reel1 < 4)
+              {
+                  AnimationReel1 = Content.Load<Texture2D>("Seven"); 
+              }
+            else
+              if (reel1 >= 4 && reel1 < 7)
+               {
+                  AnimationReel1 = Content.Load<Texture2D>("Star");
+               }
+            else
+              if (reel1 >= 7 && reel1 < 11)
+               {
+                   AnimationReel1 = Content.Load<Texture2D>("Cherry");
+               }
+            else
+               if(reel1 >= 11 && reel1 < 16)
+               {
+                   AnimationReel1 = Content.Load<Texture2D>("BAR3");
+               }
+            else
+               if(reel1 >= 16 && reel1 <21)
+               {
+                   AnimationReel1 = Content.Load<Texture2D>("BAR2");
+               }
+               else
+                if(reel1 >= 21 && reel1 < 26)
+                {
+                    AnimationReel1 = Content.Load<Texture2D>("BAR");
+                }
+             
+            //Reel2 random image
+             if (reel2 == 1)
+             {
+                 AnimationReel2 = Content.Load<Texture2D>("Diamond");
+             }
+             else
+                 if (reel2 > 1 && reel2 < 4)
+                 {
+                     AnimationReel2 = Content.Load<Texture2D>("Seven");
+                 }
+                 else
+                     if (reel2 >= 4 && reel2 < 7)
+                     {
+                         AnimationReel2 = Content.Load<Texture2D>("Star");
+                     }
+                     else
+                         if (reel2 >= 7 && reel2 < 11)
+                         {
+                             AnimationReel2 = Content.Load<Texture2D>("Cherry");
+                         }
+                         else
+                             if (reel2 >= 11 && reel2 < 16)
+                             {
+                                 AnimationReel2 = Content.Load<Texture2D>("BAR3");
+                             }
+                             else
+                                 if (reel2 >= 16 && reel2 < 21)
+                                 {
+                                     AnimationReel2 = Content.Load<Texture2D>("BAR2");
+                                 }
+                                 else
+                                     if (reel2 >= 21 && reel2 < 26)
+                                     {
+                                         AnimationReel2 = Content.Load<Texture2D>("BAR");
+                                     }
+            //Reel3 random image
+             if (reel3 == 1)
+             {
+                 AnimationReel3 = Content.Load<Texture2D>("Diamond");
+             }
+             else
+                 if (reel3 > 1 && reel3 < 4)
+                 {
+                     AnimationReel3 = Content.Load<Texture2D>("Seven");
+                 }
+                 else
+                     if (reel3 >= 4 && reel3 < 7)
+                     {
+                         AnimationReel3 = Content.Load<Texture2D>("Star");
+                     }
+                     else
+                         if (reel3 >= 7 && reel3 < 11)
+                         {
+                             AnimationReel3 = Content.Load<Texture2D>("Cherry");
+                         }
+                         else
+                             if (reel3 >= 11 && reel3 < 16)
+                             {
+                                 AnimationReel3 = Content.Load<Texture2D>("BAR3");
+                             }
+                             else
+                                 if (reel3 >= 16 && reel3 < 21)
+                                 {
+                                     AnimationReel3 = Content.Load<Texture2D>("BAR2");
+                                 }
+                                 else
+                                     if (reel3 >= 21 && reel3 < 26)
+                                     {
+                                         AnimationReel3 = Content.Load<Texture2D>("BAR");
+                                     }
+
+            //Reel4 random image
+             if (reel4 == 1)
+             {
+                 AnimationReel4 = Content.Load<Texture2D>("Diamond");
+             }
+             else
+                 if (reel4 > 1 && reel4 < 4)
+                 {
+                     AnimationReel4 = Content.Load<Texture2D>("Seven");
+                 }
+                 else
+                     if (reel4 >= 4 && reel4 < 7)
+                     {
+                         AnimationReel4 = Content.Load<Texture2D>("Star");
+                     }
+                     else
+                         if (reel4 >= 7 && reel4 < 11)
+                         {
+                             AnimationReel4 = Content.Load<Texture2D>("Cherry");
+                         }
+                         else
+                             if (reel4 >= 11 && reel4 < 16)
+                             {
+                                 AnimationReel4 = Content.Load<Texture2D>("BAR3");
+                             }
+                             else
+                                 if (reel4 >= 16 && reel4 < 21)
+                                 {
+                                     AnimationReel4 = Content.Load<Texture2D>("BAR2");
+                                 }
+                                 else
+                                     if (reel4 >= 21 && reel4 < 26)
+                                     {
+                                         AnimationReel4 = Content.Load<Texture2D>("BAR");
+                                     }
+
+
+           /* switch (reel1)
             {
                 case 1:
-                    AnimationReel1 = Content.Load<Texture2D>("BAR");
+                    AnimationReel1 = Content.Load<Texture2D>("Diamond");
                     
                     break;
 
-                case 2:
-                    AnimationReel1 = Content.Load<Texture2D>("Star");
+                case 2-3:
+                    AnimationReel1 = Content.Load<Texture2D>("Seven");
                    
                     break;
 
-                case 3:
-                    AnimationReel1 = Content.Load<Texture2D>("Diamond");
+                case 4-6:
+                    AnimationReel1 = Content.Load<Texture2D>("Star");
                     break;
-                case 4:
-                    AnimationReel1 = Content.Load<Texture2D>("BAR2");
-                    break;
-                case 5:
-                    AnimationReel1 = Content.Load<Texture2D>("BAR3");
-                    break;
-                case 6:
+                case 7-10:
                     AnimationReel1 = Content.Load<Texture2D>("Cherry");
                     break;
-                case 7:
-                    AnimationReel1 = Content.Load<Texture2D>("Seven");
+                case 11-15:
+                    AnimationReel1 = Content.Load<Texture2D>("BAR");
+                    break;
+                case 16-20:
+                    AnimationReel1 = Content.Load<Texture2D>("BAR2");
+                    break;
+                case 21-25:
+                    AnimationReel1 = Content.Load<Texture2D>("BAR3");
                     
 
                     break;
 
 
             }
+            
             switch (reel2)
             { 
                 case 1:
@@ -531,7 +681,7 @@ namespace NewCleanSlots
                     AnimationReel4 = Content.Load<Texture2D>("Seven");
                     break;
             }
-                       
+               */        
         }
           
         public void WinCheck(int reel1, int reel2, int reel3, int reel4)
@@ -539,50 +689,115 @@ namespace NewCleanSlots
             //Check for winning Combos
           //  int _coinValue = 5;
 
-            if (reel1 == 1 & reel2 == 1 & reel3 == 1 & reel4 == 1)
+            if ((reel1 == 1 || reel4 ==1) & reel2 == 1 & reel3 == 1 )
             {
-                //_coinValue = _coinValue += 10;
-                _coinValue = _coinValue + (_betValue * 10); //increase the coinValue by 10 * betValue
+                
+                _coinValue = _coinValue + (_betValue * 500); 
 
-                _wonValue = _wonValue + (_betValue * 10);               
+                _wonValue = _wonValue + (_betValue * 500);               
                                 
             }
             else
-                if (reel1 == 2 & reel2 == 2 & reel3 == 2 & reel4 == 2)
+                if (((reel1 >= 2 & reel1 <4 ) || (reel4 >= 2 & reel4 < 4)) & ( reel2 >=2 & reel2 < 4) & (reel3 >= 2 & reel3 < 4 ))
                 {
-                   // _coinValue = _coinValue += 10;
-                    _coinValue = _coinValue + (_betValue * 10);
-                    _wonValue = _wonValue + (_betValue * 10);
+                   
+                    _coinValue = _coinValue + (_betValue * 60);
+                    _wonValue = _wonValue + (_betValue * 60);
 
                 }
                 else
-                    if (reel1 == 3 & reel2 == 3 & reel3 == 3 & reel4 == 3)
+                    if (((reel1 >= 4 & reel1 < 7) || (reel4 >= 4 & reel4 < 7)) & (reel2 >= 4 & reel2 < 7) & (reel3 >=4 & reel3 < 7) )
                     {
-                       // _coinValue = _coinValue +=10;
-                        _coinValue = _coinValue + (_betValue * 10);
-                        _wonValue = _wonValue + (_betValue * 10);
+                       
+                        _coinValue = _coinValue + (_betValue * 50);
+                        _wonValue = _wonValue + (_betValue * 50);
                     }
                    else
-                        if (reel1 == 4 & reel2 == 4 & reel3 == 4 & reel4 == 4)
+                        if (((reel1 >= 7 & reel1 < 11) || (reel4 >= 7 & reel4 < 11)) & (reel2 >= 7 & reel2 < 11) & (reel3 >= 7 & reel3 < 11))
                         {
-                            // _coinValue = _coinValue +=10;
-                            _coinValue = _coinValue + (_betValue * 10);
-                            _wonValue = _wonValue + (_betValue * 10);
+                            
+                            _coinValue = _coinValue + (_betValue * 40);
+                            _wonValue = _wonValue + (_betValue * 40);
                         }
                         else
-                            if (reel1 == 5 & reel2 == 5 & reel3 == 5 & reel4 == 5)
+                            if (((reel1 >= 11 & reel1 < 16) || (reel4 >= 11 & reel4 <16 )) & (reel2 >=11 & reel2 < 16) & (reel3 >= 11 & reel3 <16))
                             {
-                                // _coinValue = _coinValue +=10;
-                                _coinValue = _coinValue + (_betValue * 10);
-                                _wonValue = _wonValue + (_betValue * 10);
+                                
+                                _coinValue = _coinValue + (_betValue * 30);
+                                _wonValue = _wonValue + (_betValue * 30);
                             }
                             else
-                                if (reel1 == 6 & reel2 == 6 & reel3 == 6 & reel4 == 6)
+                                if (((reel1 >=16 & reel1 < 21) || (reel4 >= 16 & reel4 < 21)) & (reel2 >= 16 & reel2 <  21) & (reel3 >= 16 & reel3 <21))
                                 {
-                                    // _coinValue = _coinValue +=10;
-                                    _coinValue = _coinValue + (_betValue * 10);
-                                    _wonValue = _wonValue + (_betValue * 10);
+                                   
+                                    _coinValue = _coinValue + (_betValue * 20);
+                                    _wonValue = _wonValue + (_betValue * 20);
                                 }
+                                else
+                                    if (((reel1 >= 21 & reel1 < 26) || (reel4>= 21 & reel4 < 26)) & (reel2 >= 21 & reel2 < 26) & (reel3 >= 21 & reel3 < 26))
+                                    {
+                                        _coinValue = _coinValue + (_betValue * 10);
+                                        _wonValue = _wonValue + (_betValue * 10);
+                                    }
+                                   
+            //Four of the same images
+                                    else
+                                        if (reel1 == 1 & reel4 == 1 & reel2 == 1 & reel3 == 1)
+                                        {
+
+                                            _coinValue = _coinValue + (_betValue * 1000);
+
+                                            _wonValue = _wonValue + (_betValue * 1000);
+
+                                        }
+                                        else
+                                            if (((reel1 >= 2 & reel1 < 4) || (reel4 >= 2 & reel4 < 4)) & (reel2 >= 2 & reel2 < 4) & (reel3 >= 2 & reel3 < 4))
+                                            {
+
+                                                _coinValue = _coinValue + (_betValue * 60);
+                                                _wonValue = _wonValue + (_betValue * 60);
+
+                                            }
+                                            else
+                                                if (((reel1 >= 4 & reel1 < 7) || (reel4 >= 4 & reel4 < 7)) & (reel2 >= 4 & reel2 < 7) & (reel3 >= 4 & reel3 < 7))
+                                                {
+
+                                                    _coinValue = _coinValue + (_betValue * 50);
+                                                    _wonValue = _wonValue + (_betValue * 50);
+                                                }
+                                                else
+                                                    if (((reel1 >= 7 & reel1 < 11) || (reel4 >= 7 & reel4 < 11)) & (reel2 >= 7 & reel2 < 11) & (reel3 >= 7 & reel3 < 11))
+                                                    {
+
+                                                        _coinValue = _coinValue + (_betValue * 40);
+                                                        _wonValue = _wonValue + (_betValue * 40);
+                                                    }
+                                                    else
+                                                        if (((reel1 >= 11 & reel1 < 16) || (reel4 >= 11 & reel4 < 16)) & (reel2 >= 11 & reel2 < 16) & (reel3 >= 11 & reel3 < 16))
+                                                        {
+
+                                                            _coinValue = _coinValue + (_betValue * 30);
+                                                            _wonValue = _wonValue + (_betValue * 30);
+                                                        }
+                                                        else
+                                                            if (((reel1 >= 16 & reel1 < 21) || (reel4 >= 16 & reel4 < 21)) & (reel2 >= 16 & reel2 < 21) & (reel3 >= 16 & reel3 < 21))
+                                                            {
+
+                                                                _coinValue = _coinValue + (_betValue * 20);
+                                                                _wonValue = _wonValue + (_betValue * 20);
+                                                            }
+                                                            else
+                                                                if (((reel1 >= 21 & reel1 < 26) || (reel4 >= 21 & reel4 < 26)) & (reel2 >= 21 & reel2 < 26) & (reel3 >= 21 & reel3 < 26))
+                                                                {
+                                                                    _coinValue = _coinValue + (_betValue * 10);
+                                                                    _wonValue = _wonValue + (_betValue * 10);
+                                                                }
+            
+                                    
+                                       
+                                   
+
+                                 
         }
         
       
