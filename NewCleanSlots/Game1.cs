@@ -4,9 +4,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
+
 
 namespace NewCleanSlots
 {
@@ -67,6 +72,14 @@ namespace NewCleanSlots
         bool isInputClicked = false; // so spin button keeps animation() going.
         bool isInputReleased = false;    
                    
+
+        //Different screen sizes
+        const bool resolutionIndependent = false;
+        Vector2 baseScreenSize = new Vector2(480, 800);
+        int screenWidth,
+            screenHeight;
+        GraphicsDevice  device;
+
         
         public Game1()
         {
@@ -82,6 +95,11 @@ namespace NewCleanSlots
         /// </summary>
         protected override void Initialize()
         {
+            //Different screen sizes
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 500;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
             // TODO: Add your initialization logic here
             
 
@@ -95,6 +113,8 @@ namespace NewCleanSlots
         /// </summary>
         protected override void LoadContent()
         {
+            
+           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
@@ -109,6 +129,21 @@ namespace NewCleanSlots
             wonText = Content.Load<SpriteFont>("Roboto");
             Button = Content.Load<Texture2D>("Orange_btn 1");
             Button_pressed = Content.Load<Texture2D>("Orange_btn_pressed");
+
+            //Different screen sizes
+            device = graphics.GraphicsDevice;
+
+            if (resolutionIndependent)
+            {
+                screenWidth = (int)baseScreenSize.X;
+                screenHeight = (int)baseScreenSize.Y;
+
+            }
+            else
+            {
+                screenWidth = device.PresentationParameters.BackBufferWidth;
+                screenHeight = device.PresentationParameters.BackBufferHeight;
+            }
             
         }
 
@@ -258,6 +293,26 @@ namespace NewCleanSlots
         {
             GraphicsDevice.Clear(Color.DarkCyan);
 
+            //Different screen sizes
+            Vector3 screenScalingFactor;
+            if (resolutionIndependent)
+            {
+                float horScaling = (float)device.PresentationParameters.BackBufferWidth / baseScreenSize.X;
+
+                float verScaling = (float)device.PresentationParameters.BackBufferHeight / baseScreenSize.Y;
+
+                screenScalingFactor = new Vector3(horScaling, verScaling, 1);
+            }
+            else
+            {
+                screenScalingFactor = new Vector3(1, 1, 1);
+            }
+
+            Matrix globalTransformation = Matrix.CreateScale(screenScalingFactor);
+
+            //Different Screen sizes
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, globalTransformation);
+
             FourReelsBackgroundPosition = new Vector2(55, 65);
             TotalCreditsBackgroundPosition = new Vector2(55,285);
             AnimationReel1Position = new Vector2(35, 65);
@@ -270,8 +325,8 @@ namespace NewCleanSlots
             betMinusButton = new Rectangle(100, 325, 185, 100);
             spinButton = new Rectangle(525, 325, 185, 100);
             
-
-            spriteBatch.Begin();
+            
+            //spriteBatch.Begin();
 
             //image,postion,rectangle,color,rotation,origin,scale,effect,depth
             spriteBatch.Draw(FourReelsBackground, FourReelsBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 0.7f);
@@ -352,7 +407,11 @@ namespace NewCleanSlots
                 spriteBatch.Draw(Button, betMinusButton, Color.Gray);
             }
 
- 
+            spriteBatch.End();
+
+            //different screen sizes
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null,  globalTransformation);
+
 
 
 
@@ -360,6 +419,7 @@ namespace NewCleanSlots
             
 
             spriteBatch.End();
+            
           
             base.Draw(gameTime);
         }
